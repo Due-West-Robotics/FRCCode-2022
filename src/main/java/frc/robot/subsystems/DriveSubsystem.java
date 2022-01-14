@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANEncoder;
+//import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.ControlType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,8 +19,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax motor2L = new CANSparkMax(DriveConstants.kLeftMotor2Port,CANSparkMax.MotorType.kBrushless);
   private final CANSparkMax motor1R = new CANSparkMax(DriveConstants.kRightMotor1Port,CANSparkMax.MotorType.kBrushless);
   private final CANSparkMax motor2R = new CANSparkMax(DriveConstants.kRightMotor2Port,CANSparkMax.MotorType.kBrushless);
-  private final CANEncoder encoderL = motor1L.getEncoder();
-  private final CANEncoder encoderR = motor1R.getEncoder();
+  private final RelativeEncoder encoderL = motor1L.getEncoder();
+  private final RelativeEncoder encoderR = motor1R.getEncoder();
 
   private double PID_P = DriveConstants.kDefaultP;
   private double PID_I = DriveConstants.kDefaultI;
@@ -130,7 +131,7 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public CANEncoder getLeftEncoder() {
+  public RelativeEncoder getLeftEncoder() {
     return encoderL;
   }
 
@@ -139,7 +140,7 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the right drive encoder
    */
-  public CANEncoder getRightEncoder() {
+  public RelativeEncoder getRightEncoder() {
     return encoderR;
   }
 

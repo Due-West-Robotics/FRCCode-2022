@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DrivingCommands.*;
 import frc.robot.commands.IntakeCommands.*;
-//import frc.robot.commands.Autonomous.AtHomePaths.AutoNav.*;
-//import frc.robot.commands.Autonomous.AtHomePaths.GalacticSearch.*;
 import frc.robot.commands.Autonomous.*;
 import frc.robot.subsystems.IntakeSubsystem;
 

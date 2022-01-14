@@ -3,8 +3,8 @@ package frc.robot.commands.DrivingCommands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.ControlType;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Constants.*;
 /**
@@ -20,8 +20,8 @@ public class TurnDegrees extends CommandBase {
   private double m_turnRadius;
   private boolean m_finished = false;
   private int m_direction;
-  private CANPIDController m_flSpeedPID;
-  private CANPIDController m_frSpeedPID;
+  private SparkMaxPIDController m_flSpeedPID;
+  private SparkMaxPIDController m_frSpeedPID;
   private double outerSpeed;
   private double innerSpeed;
   private double targetRSpeed;
