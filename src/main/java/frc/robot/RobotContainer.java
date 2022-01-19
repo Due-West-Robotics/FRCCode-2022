@@ -46,7 +46,7 @@ public class RobotContainer {
   // The driver's controller
   GenericHID m_driverController = new Joystick(0);
 
-  private final Command m_arcadeDrive = new SlowJoystickDrive(m_robotDrive,
+  private final Command m_arcadeDrive = new SlowArcadeJoystickDrive(m_robotDrive,
   () -> m_driverController.getRawAxis(1),
   () -> m_driverController.getRawAxis(0));
 
@@ -91,12 +91,21 @@ public class RobotContainer {
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
     m_robotDrive.setDefaultCommand(
+
+
         // A split-stick arcade command, with forward/backward controlled by the left
         // hand, and turning controlled by the right.
-        new SlowJoystickDrive(
+        // new SlowArcadeJoystickDrive(
+        //     m_robotDrive,
+        //     () -> m_driverController.getRawAxis(1),
+        //     () -> m_driverController.getRawAxis(0)));
+
+
+        new SlowTankJoystickDrive(
             m_robotDrive,
             () -> m_driverController.getRawAxis(1),
-            () -> m_driverController.getRawAxis(0)));
+            () -> m_driverController.getRawAxis(5)));
+
 
     /*m_intakeSubsystem.setDefaultCommand(
       // A split-stick arcade command, with forward/backward controlled by the left
@@ -127,14 +136,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, OIConstants.kButtonIntakeOn).whenPressed(new StartIntake(m_intakeSubsystem));
     new JoystickButton(m_driverController, OIConstants.kButtonIntakeOff).whenPressed(new StopIntake(m_intakeSubsystem));
-    new JoystickButton(m_driverController, OIConstants.kButtonIntakeReverse).whenPressed(new ReverseIntake(m_intakeSubsystem));
-    new JoystickButton(m_driverController, OIConstants.kButtonLaunchIntake).whenPressed(new LaunchIntake(m_intakeSubsystem));
-    new JoystickButton(m_driverController, OIConstants.kButtonFastGear).whenPressed(new FastJoystickDrive(m_robotDrive,
+    //new JoystickButton(m_driverController, OIConstants.kButtonIntakeReverse).whenPressed(new ReverseIntake(m_intakeSubsystem));
+    //new JoystickButton(m_driverController, OIConstants.kButtonLaunchIntake).whenPressed(new LaunchIntake(m_intakeSubsystem));
+    new JoystickButton(m_driverController, OIConstants.kButtonFastGear).whenPressed(new FastTankJoystickDrive(m_robotDrive,
     () -> m_driverController.getRawAxis(1),
-    () -> m_driverController.getRawAxis(0)));
-    new JoystickButton(m_driverController, OIConstants.kButtonSlowGear).whenPressed(new SlowJoystickDrive(m_robotDrive,
+    () -> m_driverController.getRawAxis(5)));
+    new JoystickButton(m_driverController, OIConstants.kButtonSlowGear).whenPressed(new SlowTankJoystickDrive(m_robotDrive,
     () -> m_driverController.getRawAxis(1),
-    () -> m_driverController.getRawAxis(0)));
+    () -> m_driverController.getRawAxis(5)));
     }
   
   public Command getAutonomousCommand() {

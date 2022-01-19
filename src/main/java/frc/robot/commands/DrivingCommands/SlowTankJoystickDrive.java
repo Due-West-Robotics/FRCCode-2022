@@ -12,11 +12,11 @@ import frc.robot.subsystems.DriveSubsystem;
  * explicitly for pedagogical purposes - actual code should inline a command this simple with {@link
  * edu.wpi.first.wpilibj2.command.RunCommand}.
  */
-public class SlowJoystickDrive extends CommandBase {
+public class SlowTankJoystickDrive extends CommandBase {
   private final DriveSubsystem m_drive;
-  private final DoubleSupplier m_forward;
-  private final DoubleSupplier m_rotation;
-  private double m_fwd, m_rot;
+  private final DoubleSupplier m_left;
+  private final DoubleSupplier m_right;
+  private double m_l, m_r;
 
   /**
    * Creates a new SlowJoyStickDrive
@@ -25,10 +25,10 @@ public class SlowJoystickDrive extends CommandBase {
    * @param forward  The control input for driving forwards/backwards
    * @param rotation The control input for turning
    */
-  public SlowJoystickDrive(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
+  public SlowTankJoystickDrive(DriveSubsystem subsystem, DoubleSupplier left, DoubleSupplier right) {
     m_drive = subsystem;
-    m_forward = forward;
-    m_rotation = rotation;
+    m_left = left;
+    m_right = right;
     addRequirements(m_drive);
   }
 
@@ -38,38 +38,41 @@ public class SlowJoystickDrive extends CommandBase {
      // @todo Add max speed of 70%
      
     //get the sign of each value (needed for squared sensitivity)
-    double fwdSign = Math.signum(-m_forward.getAsDouble());
-    double rotSign = Math.signum(m_rotation.getAsDouble());
+    double leftSign = Math.signum(-m_left.getAsDouble());
+    double rightSign = Math.signum(-m_right.getAsDouble());
 
-    m_fwd = Math.pow(m_forward.getAsDouble(),2) * DriveConstants.kSlow;
-    m_rot = Math.pow(m_rotation.getAsDouble(),4) * DriveConstants.kSlow;
+    m_l = Math.pow(m_left.getAsDouble(),2) * DriveConstants.kSlow;
+    m_r = Math.pow(m_right.getAsDouble(),2) * DriveConstants.kSlow;
   
 
     //add thresholds for very low power
-    if(Math.abs(m_fwd) < DriveConstants.kMinPower) {
-      m_fwd = 0;
+    if(Math.abs(m_l) < DriveConstants.kMinPower) {
+      m_l = 0;
     }
-    if(Math.abs(m_rot) < DriveConstants.kMinPower) {
-      m_rot = 0;
+    if(Math.abs(m_r) < DriveConstants.kMinPower) {
+      m_r = 0;
     }
-    if(fwdSign < 0) {
-      m_fwd *= -1;
+    if(leftSign < 0) {
+      m_l *= -1;
     }
-    if(rotSign < 0) {
-      m_rot *= -1;
+    if(rightSign < 0) {
+      m_r *= -1;
     }
     
-    if(Math.abs(m_fwd) + Math.abs(m_rot) < DriveConstants.kMinPower) {
+    if(Math.abs(m_l) + Math.abs(m_r) < DriveConstants.kMinPower) {
       m_drive.resetIAccum();
     }
-    m_drive.arcadeDrive(m_fwd, m_rot);
+    m_drive.tankDrive(m_l, m_r);
 
-    SmartDashboard.putNumber("Target Speed", m_fwd);
+    SmartDashboard.putNumber("Target Left Speed", m_l);
+    SmartDashboard.putNumber("Target Right Speed", m_r);
   }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+
+      SmartDashboard.putBoolean("Fast Mode", false);
 
       //Turn off integral control, which causes problems with quickly changing values
       //m_drive.setPID_I(0);
@@ -78,7 +81,7 @@ public class SlowJoystickDrive extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-      m_drive.arcadeDrive(0, 0);
+      m_drive.tankDrive(0, 0);
     }
   
     // Returns true when the command should end.

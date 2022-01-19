@@ -77,12 +77,12 @@ public final class Constants {
   
     public static final class OIConstants {
       public static final int kDriverControllerPort = 1;
-      public static final int kButtonIntakeOn = 1;
-      public static final int kButtonIntakeOff = 2;
-      public static final int kButtonIntakeReverse = 5;
-      public static final int kButtonLaunchIntake = 6;
-      public static final int kButtonFastGear = 9;
-      public static final int kButtonSlowGear = 11;
+      public static final int kButtonIntakeOn = 6;
+      public static final int kButtonIntakeOff = 5;
+      //public static final int kButtonIntakeReverse = 5;
+      //public static final int kButtonLaunchIntake = 6;
+      public static final int kButtonFastGear = 3;
+      public static final int kButtonSlowGear = 2;
 
     }
   }

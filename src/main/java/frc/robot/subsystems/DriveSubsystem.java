@@ -37,6 +37,8 @@ public class DriveSubsystem extends SubsystemBase {
     motor2L.follow(getFrontLeftSparkMax());
     motor2R.follow(getFrontRightSparkMax());
 
+    setCoast();
+
     //setup PID controller
     //motor1L.getPIDController().setIZone(DriveConstants.kIZone);
     //motor1R.getPIDController().setIZone(DriveConstants.kIZone);
@@ -78,7 +80,32 @@ public class DriveSubsystem extends SubsystemBase {
     leftMotorOutput = MathUtil.clamp(leftMotorOutput, -1.0, 1.0);
     rightMotorOutput = MathUtil.clamp(rightMotorOutput, -1.0, 1.0);
 
-    setCoast();
+    motor1L.getPIDController().setReference(leftMotorOutput * DriveConstants.kMaxRPM , ControlType.kVelocity);
+    motor1R.getPIDController().setReference(rightMotorOutput * DriveConstants.kMaxRPM , ControlType.kVelocity);
+  }
+
+  /**
+   * 
+   * @param left
+   * @param right
+   */
+  public void tankDrive(double left, double right){
+    //forward and turning variables for calculation
+    double m_left = left;
+    double m_right = right;
+
+    //final output power
+    double leftMotorOutput = 0;
+    double rightMotorOutput = 0;
+
+    leftMotorOutput += m_left;
+    rightMotorOutput += m_right;
+
+    // leftMotorOutput += m_left;
+    // rightMotorOutput -= m_right;
+
+    leftMotorOutput = MathUtil.clamp(leftMotorOutput, -1.0, 1.0);
+    rightMotorOutput = MathUtil.clamp(rightMotorOutput, -1.0, 1.0);
 
     motor1L.getPIDController().setReference(leftMotorOutput * DriveConstants.kMaxRPM , ControlType.kVelocity);
     motor1R.getPIDController().setReference(rightMotorOutput * DriveConstants.kMaxRPM , ControlType.kVelocity);
