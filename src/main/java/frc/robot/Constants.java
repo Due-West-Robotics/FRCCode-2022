@@ -19,12 +19,12 @@ public final class Constants {
       public static final double kDriveWidth = 22;
       
       //motor ports
-      public static final int kLeftMotor1Port = 3;
-      public static final int kLeftMotor2Port = 4;
-      public static final int kRightMotor1Port = 1;
-      public static final int kRightMotor2Port = 2;
-      public static final int kIntakeMotorPort = 5;
-      public static final int kShootingMotorPort = 6;
+      public static final int kLeftMotor1Port = 2;
+      public static final int kLeftMotor2Port = 3;
+      public static final int kRightMotor1Port = 4;
+      public static final int kRightMotor2Port = 5;
+      //public static final int kIntakeMotorPort = 5;
+      //public static final int kShootingMotorPort = 6;
 
       //encoder constants  
       public static final int[] kLeftEncoderPorts = new int[] {0, 1};

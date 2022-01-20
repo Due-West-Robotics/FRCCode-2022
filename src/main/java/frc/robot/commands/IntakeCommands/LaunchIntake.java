@@ -21,7 +21,7 @@ public class LaunchIntake extends CommandBase {
 
   @Override
   public void initialize() {
-    m_intake.launchIntake();
+    //m_intake.launchIntake();
   }
 
   @Override

@@ -20,7 +20,7 @@ public class StopIntake extends CommandBase {
   @Override
   public void initialize() {
     //This stops the intake.
-    m_intake.stopIntake();
+    //m_intake.stopIntake();
   }
 
   @Override

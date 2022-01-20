@@ -20,7 +20,7 @@ public class StartIntake extends CommandBase {
   @Override
   public void initialize() {
     //This starts the intake.
-    m_intake.startIntake();
+    //m_intake.startIntake();
   }
 
   @Override
