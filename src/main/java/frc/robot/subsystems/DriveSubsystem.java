@@ -21,6 +21,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final RelativeEncoder encoderL = motor1L.getEncoder();
   private final RelativeEncoder encoderR = motor1R.getEncoder();
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
+  private Double speedMultiplier = 1.0;
 
 
   /** Creates a new ExampleSubsystem. */
@@ -32,8 +33,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void TankDrive(Double left, Double right){
-    motor1L.set(left);
-    motor1R.set(right);
+    motor1L.set(left * speedMultiplier);
+    motor1R.set(right * speedMultiplier);
   }
 
   @Override

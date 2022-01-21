@@ -25,11 +25,7 @@ public class RobotContainer {
 
   private Joystick driveJoystick = new Joystick(0);
 
-  private final Command m_fastTankDrive = new FastTankDrive(m_driveSubsystem, 
-  () -> driveJoystick.getRawAxis(1),
-  () -> driveJoystick.getRawAxis(5));
-
-  private final Command m_slowTankDrive = new SlowTankDrive(m_driveSubsystem, 
+  private final Command m_TankDrive = new TankDrive(m_driveSubsystem, 
   () -> driveJoystick.getRawAxis(1),
   () -> driveJoystick.getRawAxis(5));
 
@@ -37,7 +33,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_driveSubsystem.setDefaultCommand(new SlowTankDrive(m_driveSubsystem,
+    m_driveSubsystem.setDefaultCommand(new TankDrive(m_driveSubsystem,
     () -> driveJoystick.getRawAxis(1),
     () -> driveJoystick.getRawAxis(5)));
   }
@@ -49,12 +45,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driveJoystick, OIConstants.kFastGearButton).whenPressed(new FastTankDrive(m_driveSubsystem,
-    () -> driveJoystick.getRawAxis(1),
-    () -> driveJoystick.getRawAxis(5)));
-    new JoystickButton(driveJoystick, OIConstants.kSlowGearButton).whenPressed(new SlowTankDrive(m_driveSubsystem,
-    () -> driveJoystick.getRawAxis(1),
-    () -> driveJoystick.getRawAxis(5)));
+    //new JoystickButton(driveJoystick, OIConstants.kSwitchSpeedButton).whenPressed();
   }
 
   /**

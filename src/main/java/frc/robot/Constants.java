@@ -25,8 +25,7 @@ public final class Constants {
     }
 
     public static final class OIConstants{
-        public static final int kFastGearButton = 3;
-        public static final int kSlowGearButton = 2;
+        public static final int kSwitchSpeedButton = 2;
     }
 
 }
