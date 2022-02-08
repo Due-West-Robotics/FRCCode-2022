@@ -21,10 +21,9 @@ public class DriveSubsystem extends SubsystemBase {
   private final RelativeEncoder encoderL = motor1L.getEncoder();
   private final RelativeEncoder encoderR = motor1R.getEncoder();
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
-  private Double speedMultiplier = 1.0;
 
 
-  /** Creates a new ExampleSubsystem. */
+  /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     motor1R.setInverted(true);
     motor2R.setInverted(true);
@@ -33,8 +32,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void TankDrive(Double left, Double right){
-    motor1L.set(left * speedMultiplier);
-    motor1R.set(right * speedMultiplier);
+    motor1L.set(left * DriveConstants.kSpeedMultiplier);
+    motor1R.set(right * DriveConstants.kSpeedMultiplier);
   }
 
   @Override
@@ -43,6 +42,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro", ahrs.getYaw());
     SmartDashboard.putNumber("Encoder L", encoderL.getPosition());
     SmartDashboard.putNumber("Encoder R", encoderR.getPosition());
+    SmartDashboard.putNumber("Speed L", motor1L.get());
+    SmartDashboard.putNumber("Speed R", motor1R.get());
   }
 
   @Override
