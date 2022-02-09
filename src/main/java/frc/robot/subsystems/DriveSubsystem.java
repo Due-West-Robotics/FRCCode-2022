@@ -14,26 +14,44 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private final CANSparkMax motor1L = new CANSparkMax(DriveConstants.kLeft1MotorPort,CANSparkMax.MotorType.kBrushless);
-  private final CANSparkMax motor2L = new CANSparkMax(DriveConstants.kLeft2MotorPort,CANSparkMax.MotorType.kBrushless);
-  private final CANSparkMax motor1R = new CANSparkMax(DriveConstants.kRight1MotorPort,CANSparkMax.MotorType.kBrushless);
-  private final CANSparkMax motor2R = new CANSparkMax(DriveConstants.kRight2MotorPort,CANSparkMax.MotorType.kBrushless);
-  private final RelativeEncoder encoderL = motor1L.getEncoder();
-  private final RelativeEncoder encoderR = motor1R.getEncoder();
-  private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
+  private CANSparkMax motor1L;
+  private CANSparkMax motor2L;
+  private CANSparkMax motor1R;
+  private CANSparkMax motor2R;
+  private RelativeEncoder encoderL;
+  private RelativeEncoder encoderR;
+  private AHRS ahrs;
 
 
-  /** Creates a new DriveSubsystem. */
+  /** Creates a new DriveSubsystem.
+   * @todo Fix error catching
+   */
   public DriveSubsystem() {
-    motor1R.setInverted(true);
-    motor2R.setInverted(true);
-    motor2L.follow(motor1L);
-    motor2R.follow(motor1R);
+    try {
+      motor1L = new CANSparkMax(DriveConstants.kLeft1MotorPort,CANSparkMax.MotorType.kBrushless);
+      motor2L = new CANSparkMax(DriveConstants.kLeft2MotorPort,CANSparkMax.MotorType.kBrushless);
+      motor1R = new CANSparkMax(DriveConstants.kRight1MotorPort,CANSparkMax.MotorType.kBrushless);
+      motor2R = new CANSparkMax(DriveConstants.kRight2MotorPort,CANSparkMax.MotorType.kBrushless);
+      encoderL = motor1L.getEncoder();
+      encoderR = motor1R.getEncoder();
+    }
+    catch (Exception e){
+      System.out.println("Motor error: " + e + "\n");
+      e.printStackTrace();
+    }
+
+    try {
+      ahrs = new AHRS(SPI.Port.kMXP);
+    }
+    catch (Exception e){
+      System.out.println("Gyro error: " + e + "\n");
+      e.printStackTrace();
+    }
   }
 
   public void TankDrive(Double left, Double right){
-    motor1L.set(left * DriveConstants.kSpeedMultiplier);
-    motor1R.set(right * DriveConstants.kSpeedMultiplier);
+    motor1L.set(-left * DriveConstants.kSpeedMultiplier);
+    motor1R.set(-right * DriveConstants.kSpeedMultiplier);
   }
 
   @Override

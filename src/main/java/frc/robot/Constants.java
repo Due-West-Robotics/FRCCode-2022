@@ -21,13 +21,19 @@ public final class Constants {
         public static final int kRight2MotorPort = 5;
 
         public static final double kSpeedMultiplier = 1.0;
+
+        public static final int kLeftControllerPort = 0;
+        public static final int kRightControllerPort = 1;
+        public static final int kShootingControllerPort = 2;
     }
 
     public static final class IntakeConstants{
         public static final int kIntakeMotorPort = 6;
         public static final int kIntakeServoPort = 1;
+        public static final int kTransportMotorPort = 10;
 
         public static final double kIntakeSpeed = 0.5;
+        public static final double kTransportSpeed = 0.5;
     }
 
     public static final class ShooterConstants{
@@ -42,10 +48,12 @@ public final class Constants {
     }
 
     public static final class OIConstants{
-        public static final int kStartIntakeButton = 3;
-        public static final int kStopIntakeButton = 2;
+        public static final int kStartIntakeButton = 2;
+        public static final int kStopIntakeButton = 3;
         public static final int kStartShooterButton = 6;
         public static final int kStopShooterButton = 5;
+        public static final int kLiftIntakeButton = 12;
+        public static final int kDropIntakeButton = 11;
     }
 
 }

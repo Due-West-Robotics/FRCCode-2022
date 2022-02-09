@@ -13,14 +13,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private final CANSparkMax shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorPort,CANSparkMax.MotorType.kBrushless);
+  private CANSparkMax shooterMotor;
   private final Double servoSpeed = 0.5;
-  private final Servo intakeServo = new Servo(IntakeConstants.kIntakeServoPort);
+  private Servo intakeServo;
 
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
+    try {
+    shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorPort,CANSparkMax.MotorType.kBrushless);
+    intakeServo = new Servo(IntakeConstants.kIntakeServoPort);
     intakeServo.setSpeed(servoSpeed);
+    }
+    catch (Exception e){
+      System.out.println("Shooter error: " + e + "\n");
+      e.printStackTrace();
+    }
   }
 
   public void servoDown(){
@@ -33,6 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setShooterSpeed(Double speed){
     shooterMotor.set(speed);
+    System.out.println("setShooterSpeed called. Speed: " + speed);
   }
 
   @Override

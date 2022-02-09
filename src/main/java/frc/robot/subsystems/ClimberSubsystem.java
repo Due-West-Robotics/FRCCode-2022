@@ -12,13 +12,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-  private final CANSparkMax climbMotor1 = new CANSparkMax(ClimberConstants.kClimber1MotorPort,CANSparkMax.MotorType.kBrushless);
-  private final CANSparkMax climbMotor2 = new CANSparkMax(ClimberConstants.kClimber2MotorPort,CANSparkMax.MotorType.kBrushless);
-
+  private CANSparkMax climbMotor1;
+  private CANSparkMax climbMotor2;
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
-
+    try{
+      climbMotor1 = new CANSparkMax(ClimberConstants.kClimber1MotorPort,CANSparkMax.MotorType.kBrushless);
+      climbMotor2 = new CANSparkMax(ClimberConstants.kClimber2MotorPort,CANSparkMax.MotorType.kBrushless);
+    }
+    catch(Exception e){
+      System.out.println("Climber error: " + e + "\n");
+      e.printStackTrace();
+    }
   }
 
   @Override

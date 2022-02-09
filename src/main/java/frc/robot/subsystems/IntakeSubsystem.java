@@ -12,15 +12,39 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort,CANSparkMax.MotorType.kBrushless);
+  private CANSparkMax intakeMotor;
+  private CANSparkMax transportMotor;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-
+    try {
+      intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort,CANSparkMax.MotorType.kBrushless);
+      transportMotor = new CANSparkMax(IntakeConstants.kTransportMotorPort, CANSparkMax.MotorType.kBrushless);
+    }
+    catch (Exception e){
+      System.out.println("Intake error: " + e + "\n");
+      e.printStackTrace();
+    }
   }
 
   public void setIntakeSpeed(Double speed){
     intakeMotor.set(speed);
+    System.out.println("setIntakeSpeed called. Speed: " + speed);
+  }
+
+  public void setTransportSpeed(Double speed){
+    transportMotor.set(speed);
+    System.out.println("setTransportSpeed called. Speed: " + speed);
+  }
+
+  public void setIntakeLifted(boolean setLifted){
+    System.out.println("setIntakeLifted called. setLifted = " + setLifted);
+    if (setLifted){
+      // Some brushed motor up here.
+    }
+    else {
+      // Some brushed motor down here.
+    }
   }
 
   @Override
