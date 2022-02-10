@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.*;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -52,6 +53,26 @@ public class DriveSubsystem extends SubsystemBase {
   public void TankDrive(Double left, Double right){
     motor1L.set(-left * DriveConstants.kSpeedMultiplier);
     motor1R.set(-right * DriveConstants.kSpeedMultiplier);
+  }
+
+  public void ArcadeDrive(Double fwd, Double rot){
+    double m_fwd = fwd;
+    double m_rot = rot;
+
+    double leftMotorOutput = 0;
+    double rightMotorOutput = 0;
+
+    leftMotorOutput += m_fwd;
+    rightMotorOutput += m_fwd;
+
+    leftMotorOutput += m_rot;
+    rightMotorOutput += m_rot;
+
+    leftMotorOutput = MathUtil.clamp(leftMotorOutput, -1.0, 1.0);
+    rightMotorOutput = MathUtil.clamp(rightMotorOutput, -1.0, 1.0);
+
+    motor1L.set(leftMotorOutput);
+    motor1R.set(rightMotorOutput);
   }
 
   @Override
