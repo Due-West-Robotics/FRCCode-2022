@@ -4,7 +4,6 @@
 
 package frc.robot.commands.Teleop.Intake;
 
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

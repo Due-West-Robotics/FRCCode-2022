@@ -27,12 +27,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
   }
 
-  public void setIntakeSpeed(Double speed){
+  public void setIntakeSpeed(double speed){
     intakeMotor.set(speed);
     System.out.println("setIntakeSpeed called. Speed: " + speed);
   }
 
-  public void setTransportSpeed(Double speed){
+  public void setTransportSpeed(double speed){
     transportMotor.set(speed);
     System.out.println("setTransportSpeed called. Speed: " + speed);
   }

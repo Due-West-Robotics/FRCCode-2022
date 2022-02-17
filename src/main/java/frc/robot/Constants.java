@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -15,22 +17,45 @@ package frc.robot;
 public final class Constants {
 
     public static final class DriveConstants{
-        public static final int kLeft1MotorPort = 2;
-        public static final int kLeft2MotorPort = 3;
-        public static final int kRight1MotorPort = 4;
-        public static final int kRight2MotorPort = 5;
+        public static final int kLeft1MotorPort = 1;
+        public static final int kLeft2MotorPort = 2;
+        public static final int kRight1MotorPort = 3;
+        public static final int kRight2MotorPort = 4;
 
         public static final double kSpeedMultiplier = 1.0;
 
         public static final int kLeftControllerPort = 0;
         public static final int kRightControllerPort = 1;
         public static final int kShootingControllerPort = 2;
+
+
+
+
+        // Docs at https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html
+        // These need to be changed to fit our robot.
+        public static final double ksVolts = 0.22;
+        public static final double kvVoltSecondsPerMeter = 1.98;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+        public static final double kPDriveVel = 8.5;
+
+        // Needs to be calculated correctly
+        public static final double kTrackwidthMeters = 0.69;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+        // Should be checked
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+
     }
 
     public static final class IntakeConstants{
         public static final int kIntakeMotorPort = 6;
         public static final int kIntakeServoPort = 1;
-        public static final int kTransportMotorPort = 10;
+        public static final int kTransportMotorPort = 5;
 
         public static final double kIntakeSpeed = 0.5;
         public static final double kTransportSpeed = 0.5;
@@ -43,8 +68,21 @@ public final class Constants {
     }
 
     public static final class ClimberConstants{
-        public static final int kClimber1MotorPort = 8;
-        public static final int kClimber2MotorPort = 9;
+        public static final int kClimber1MotorPort = 9;
+        public static final int kClimber2MotorPort = 8;
+
+        public static final double kClimberSpeed = 0.5;
+    }
+
+    public static final class VisionConstants{
+        public static final int kTargetPipeline = 2;
+        public static final int kRedPipeline = 0;
+        public static final int kBluePipeline = 1;
+
+        public static final double kTurnSpeed = 0.25;
+        public static final double kCameraHorizontalGoal = 0.25;
+        public static final double kCameraVerticalGoal = 0.25;
+        public static final double kCameraTargetAreaGoal = 0.25;
     }
 
     public static final class OIConstants{

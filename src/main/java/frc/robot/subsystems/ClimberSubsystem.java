@@ -27,6 +27,12 @@ public class ClimberSubsystem extends SubsystemBase {
     }
   }
 
+  public void setClimberSpeed(double speed){
+    climbMotor1.set(speed);
+    climbMotor2.set(speed);
+    System.out.println("setClimberSpeed called. Speed: " + speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ShooterSubsystem extends SubsystemBase {
 
   private CANSparkMax shooterMotor;
-  private final Double servoSpeed = 0.5;
+  private final double servoSpeed = 0.5;
   private Servo intakeServo;
 
 
@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     intakeServo.setAngle(180);
   }
 
-  public void setShooterSpeed(Double speed){
+  public void setShooterSpeed(double speed){
     shooterMotor.set(speed);
     System.out.println("setShooterSpeed called. Speed: " + speed);
   }

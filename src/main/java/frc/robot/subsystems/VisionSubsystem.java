@@ -69,14 +69,21 @@ public class VisionSubsystem extends SubsystemBase{
         return Double.NaN;
     }
 
-    public void GetCamMode(double defaultValue)
+
+
+    public double GetCamMode()
     {
-        limelightTableEntry.getEntry("camMode").getDouble(defaultValue);
+        return limelightTableEntry.getEntry("camMode").getDouble(0);
     }
 
-    public void GetLedMode(double defaultValue)
+    public double GetLedMode()
     {
-        limelightTableEntry.getEntry("ledMode").getDouble(defaultValue);
+        return limelightTableEntry.getEntry("ledMode").getDouble(0);
+    }
+
+    public double getActivePipeline()
+    {
+        return limelightTableEntry.getEntry("getpipe").getDouble(0);
     }
 
     public void SetCamMode(double camMode)
@@ -89,13 +96,20 @@ public class VisionSubsystem extends SubsystemBase{
         limelightTableEntry.getEntry("ledMode").setNumber(ledMode);
     }
 
+    public void SetActivePipeline(int pipeline)
+    {
+        limelightTableEntry.getEntry("getpipe").setNumber(pipeline);
+    }
+
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("tv", limelightTableEntry.getEntry("tv").getDouble(0));
         SmartDashboard.putNumber("tx", limelightTableEntry.getEntry("tx").getDouble(0));
         SmartDashboard.putNumber("ty", limelightTableEntry.getEntry("ty").getDouble(0));
         SmartDashboard.putNumber("ta", limelightTableEntry.getEntry("ta").getDouble(0));
-        SmartDashboard.putNumber("camMode", limelightTableEntry.getEntry("camMode").getDouble(0));
-        SmartDashboard.putNumber("ledmode", limelightTableEntry.getEntry("ledMode").getDouble(0));
+        SmartDashboard.putNumber("camMode", limelightTableEntry.getEntry("camMode").getDouble(-1));
+        SmartDashboard.putNumber("ledmode", limelightTableEntry.getEntry("ledMode").getDouble(-1));
+        SmartDashboard.putNumber("pipeline", limelightTableEntry.getEntry("getpipe").getDouble(-1));
     }
 }
