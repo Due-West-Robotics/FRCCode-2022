@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Teleop.Drive;
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TankDrive extends CommandBase {
   private final DriveSubsystem m_driveSubsystem;
   private DoubleSupplier m_left, m_right;
+  private double m_leftModified, m_rightModified;
 
   /**
    * Creates a new TankDrive command.
@@ -32,12 +34,22 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveSubsystem.TankDrive(-m_left.getAsDouble(), m_right.getAsDouble());
+    m_leftModified = m_left.getAsDouble();
+    m_rightModified = m_right.getAsDouble();
+    if (Math.abs(m_left.getAsDouble()) < DriveConstants.kControllerDeadZone){
+      m_leftModified = 0.0;
+    }
+    if (Math.abs(m_right.getAsDouble()) < DriveConstants.kControllerDeadZone){
+      m_rightModified = 0.0;
+    }
+    m_driveSubsystem.TankDrive(m_leftModified, m_rightModified);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_driveSubsystem.TankDrive(0.0, 0.0);
+  }
 
   // Returns true when the command should end.
   @Override

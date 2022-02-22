@@ -8,7 +8,6 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.*;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -41,8 +40,8 @@ public class DriveSubsystem extends SubsystemBase {
       m_drive = new DifferentialDrive(leftMotors, rightMotors);
       encoderL = motor1L.getEncoder();
       encoderR = motor1R.getEncoder();
+      leftMotors.setInverted(true);
       resetEncoders();
-      rightMotors.setInverted(true);
     }
     catch (Exception e){
       System.out.println("Motor setup error: " + e + "\n");
@@ -58,10 +57,9 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-
   public void TankDrive(double left, double right){
-    leftMotors.set(left * DriveConstants.kSpeedMultiplier);
-    rightMotors.set(right * DriveConstants.kSpeedMultiplier);
+    m_drive.tankDrive(left * DriveConstants.kSpeedMultiplier, right * DriveConstants.kSpeedMultiplier);
+    m_drive.feed();
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -72,6 +70,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void ArcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+    m_drive.feed();
   }
 
   public Pose2d getPose() {
@@ -135,8 +134,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro", ahrs.getYaw());
     SmartDashboard.putNumber("Encoder L", encoderL.getPosition());
     SmartDashboard.putNumber("Encoder R", encoderR.getPosition());
-    SmartDashboard.putNumber("Speed L", motor1L.get());
-    SmartDashboard.putNumber("Speed R", motor1R.get());
+    SmartDashboard.putNumber("Speed L", leftMotors.get());
+    SmartDashboard.putNumber("Speed R", rightMotors.get());
   }
 
   @Override

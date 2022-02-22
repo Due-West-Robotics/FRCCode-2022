@@ -55,7 +55,6 @@ public class CameraAim extends CommandBase {
             m_drive.ArcadeDrive(0.5, -0.25);
           }
           else {
-
             if (m_camera.GetTargetArea() > VisionConstants.kCameraTargetAreaGoal || m_camera.GetTargetVerticalOffset() > VisionConstants.kCameraVerticalGoal){
               m_drive.ArcadeDrive(-0.25, 0.0);
             }

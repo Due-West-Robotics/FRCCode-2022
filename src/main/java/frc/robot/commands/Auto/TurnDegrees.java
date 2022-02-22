@@ -6,13 +6,13 @@ import frc.robot.subsystems.DriveSubsystem;
 public class TurnDegrees extends CommandBase {
     private final DriveSubsystem m_drive;
     private boolean finished = false;
-    private double m_degrees;
-    private double m_speed;
+    //private double m_degrees;
+    //private double m_speed;
     
     public TurnDegrees(DriveSubsystem driveSubsystem, double degrees, double speed){
         m_drive = driveSubsystem;
-        m_degrees = degrees;
-        m_speed = speed;
+        //m_degrees = degrees;
+        //m_speed = speed;
         addRequirements(m_drive);
     }
 

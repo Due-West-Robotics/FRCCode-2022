@@ -28,7 +28,7 @@ public final class Constants {
         public static final int kRightControllerPort = 1;
         public static final int kShootingControllerPort = 2;
 
-
+        public static final double kControllerDeadZone = 0.05;
 
 
         // Docs at https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html

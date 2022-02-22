@@ -6,14 +6,14 @@ import frc.robot.subsystems.DriveSubsystem;
 public class DriveDistance extends CommandBase {
     private final DriveSubsystem m_drive;
     private boolean finished = false;
-    private double m_meters;
-    private double m_speed;
-    private double goal;
+    //private double m_meters;
+    //private double m_speed;
+    //private double goal;
     
     public DriveDistance(DriveSubsystem driveSubsystem, double meters, double speed){
         m_drive = driveSubsystem;
-        m_meters = meters;
-        m_speed = speed;
+        //m_meters = meters;
+        //m_speed = speed;
         addRequirements(m_drive);
     }
 

@@ -19,7 +19,6 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -32,7 +31,6 @@ import frc.robot.commands.Teleop.Drive.*;
 import frc.robot.commands.Teleop.Intake.*;
 import frc.robot.commands.Teleop.Shooter.*;
 import frc.robot.subsystems.ClimberSubsystem;
-//import frc.robot.commands.Auto.*;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -59,16 +57,12 @@ public class RobotContainer {
   private Joystick rightDriveController = new Joystick(DriveConstants.kRightControllerPort);
   private Joystick shootingController = new Joystick(DriveConstants.kShootingControllerPort);
 
-  private final Command m_TankDrive = new TankDrive(m_driveSubsystem, 
-  () -> leftDriveController.getRawAxis(1),
-  () -> rightDriveController.getRawAxis(1));
-
-  SendableChooser<Integer> m_chooser = new SendableChooser<>();
+  SendableChooser<Trajectory> m_chooser = new SendableChooser<>();
 
   String trajectory1JSON = "paths/YourPath.wpilib.json";
   String trajectory2JSON = "paths/YourPath2.wpilib.json";
   Path trajectoryPath1, trajectoryPath2;
-  Trajectory trajectory = new Trajectory();
+  //Trajectory trajectory = new Trajectory(); Use m_chooser.getSelected();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -78,11 +72,19 @@ public class RobotContainer {
     () -> leftDriveController.getRawAxis(1),
     () -> rightDriveController.getRawAxis(1)));
 
-    Path trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
-    Path trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
+    trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
+    trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
 
-    m_chooser.setDefaultOption("Path 1", setTrajectoryChoice(1));
-    m_chooser.addOption("Path 1", setTrajectoryChoice(1));
+    try {
+      m_chooser.setDefaultOption("Path 1", TrajectoryUtil.fromPathweaverJson(trajectoryPath1));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    try {
+      m_chooser.addOption("Path 2", TrajectoryUtil.fromPathweaverJson(trajectoryPath2));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     Shuffleboard.getTab("Autonomous").add(m_chooser);
   }
 
@@ -99,27 +101,7 @@ public class RobotContainer {
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
     new JoystickButton(rightDriveController, OIConstants.kLiftIntakeButton).whenPressed(new LiftIntake(m_intakeSubsystem));
     new JoystickButton(rightDriveController, OIConstants.kDropIntakeButton).whenPressed(new DropIntake(m_intakeSubsystem));
-  }
-
-  public int setTrajectoryChoice(int path){
-    if (path == 1){
-      try {
-        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath1);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    else if (path == 2){
-      try {
-        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath2);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    else {
-      System.out.println("Trajectory Choice error.");
-    }
-    return path;
+    // Setup transport button (for testing)
   }
 
   /**
