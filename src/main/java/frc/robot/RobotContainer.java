@@ -59,6 +59,8 @@ public class RobotContainer {
     new JoystickButton(driveJoystick, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(driveJoystick, OIConstants.kStartShooterButton).whenPressed(new StartShooter(m_shooterSubsystem));
     new JoystickButton(driveJoystick, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
+    new JoystickButton(driveJoystick, OIConstants.kStartFeederButton).whenPressed(new FeedShooter(m_shooterSubsystem));
+    new JoystickButton(driveJoystick, OIConstants.kStopFeederButton).whenPressed(new StopFeeder(m_shooterSubsystem));
   }
 
   /**
