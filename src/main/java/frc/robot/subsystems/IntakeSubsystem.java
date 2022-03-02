@@ -20,8 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     try {
       intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort,CANSparkMax.MotorType.kBrushless);
-      transportMotor = new CANSparkMax(IntakeConstants.kTransportMotorPort, CANSparkMax.MotorType.kBrushless);
-      intakeLifterMotor = new CANSparkMax(IntakeConstants.kIntakeLifterMotorPort, CANSparkMax.MotorType.kBrushless);
+      intakeLifterMotor = new CANSparkMax(IntakeConstants.kIntakeLiftMotorPort, CANSparkMax.MotorType.kBrushless);
       intakeLifterMotorEncoder = intakeLifterMotor.getEncoder();
       intakeLifterMotorEncoder.setPosition(0.0);
     }
@@ -34,11 +33,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void setIntakeSpeed(double speed){
     intakeMotor.set(speed);
     System.out.println("setIntakeSpeed called. Speed: " + speed);
-  }
-
-  public void setTransportSpeed(double speed){
-    transportMotor.set(speed);
-    System.out.println("setTransportSpeed called. Speed: " + speed);
   }
 
   public void setIntakeLifted(boolean setLifted){

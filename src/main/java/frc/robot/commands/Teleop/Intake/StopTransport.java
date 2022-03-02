@@ -5,21 +5,21 @@
 package frc.robot.commands.Teleop.Intake;
 
 import frc.robot.subsystems.IntakeSubsystem;
-
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An intake command that uses the driveSubsystem. */
 public class StopTransport extends CommandBase {
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final ShooterSubsystem m_shooterSubsystem;
 
   /**
    * Creates a new StartIntake command.
    *
-   * @param intakeSubsystem The subsystem used by this command.
+   * @param shooterSubsystem The subsystem used by this command.
    */
-  public StopTransport(IntakeSubsystem intakeSubsystem) {
-    m_intakeSubsystem = intakeSubsystem;
-    addRequirements(m_intakeSubsystem);
+  public StopTransport(ShooterSubsystem shooterSubsystem) {
+    m_shooterSubsystem = shooterSubsystem;
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +29,7 @@ public class StopTransport extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.setTransportSpeed(0.0);
+    m_shooterSubsystem.setTransportSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

@@ -55,7 +55,7 @@ public final class Constants {
     public static final class IntakeConstants{
         public static final int kIntakeMotorPort = 6;
         public static final int kIntakeServoPort = 1;
-        public static final int kIntakeLiftPort = 7;
+        public static final int kIntakeLiftMotorPort = 7;
 
         public static final double kIntakeSpeed = 0.5;
         public static final double kTransportSpeed = -0.2;
@@ -63,7 +63,7 @@ public final class Constants {
 
     public static final class ShooterConstants{
         public static final int kShooterMotorPort = 8;
-        public static final int kShooterFeedPort = 9;
+        public static final int kTransportMotorPort = 9;
 
         public static final int kShooterServoLPort = 1;
         public static final int kShooterServoRPort = 2;
@@ -95,8 +95,8 @@ public final class Constants {
         public static final int kStopIntakeButton = 3;
         public static final int kStartShooterButton = 6;
         public static final int kStopShooterButton = 5;
-        public static final int kStartFeederButton = 1;
-        public static final int kStopFeederButton = 4;
+        public static final int kStartTransportButton = 1;
+        public static final int kStopTransportButton = 4;
         public static final int kLiftIntakeButton = 12;
         public static final int kDropIntakeButton = 11;
     }
