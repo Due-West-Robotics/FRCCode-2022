@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An intake command that uses the driveSubsystem. */
 public class DropIntake extends CommandBase {
   private final IntakeSubsystem m_intakeSubsystem;
+  private boolean finished = false;
 
   /**
    * Creates a new StartIntake command.
@@ -29,7 +30,12 @@ public class DropIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.setIntakeLifted(false);
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() < 100){ /* Set 100 to accurate number */
+      m_intakeSubsystem.setIntakeLifted(false);
+    }
+    else {
+      finished = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +45,6 @@ public class DropIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return finished;
   }
 }
