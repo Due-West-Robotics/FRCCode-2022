@@ -4,16 +4,39 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Teleop.*;
-//import frc.robot.commands.Auto.*;
+import frc.robot.commands.Teleop.Drive.*;
+import frc.robot.commands.Teleop.Intake.*;
+import frc.robot.commands.Teleop.Shooter.*;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -27,25 +50,42 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
-  private Joystick driveJoystick = new Joystick(0);
+  private Joystick leftDriveController = new Joystick(DriveConstants.kLeftControllerPort);
+  private Joystick rightDriveController = new Joystick(DriveConstants.kRightControllerPort);
+  private Joystick shootingController = new Joystick(DriveConstants.kShootingControllerPort);
 
-  private final Command m_TankDrive = new TankDrive(m_driveSubsystem, 
-  () -> driveJoystick.getRawAxis(1),
-  () -> driveJoystick.getRawAxis(5));
-  
-  private final Command m_startIntake = new StartIntake(m_intakeSubsystem);
-  private final Command m_stopIntake = new StopIntake(m_intakeSubsystem);
-  private final Command m_startShooter = new StartShooter(m_shooterSubsystem);
-  private final Command m_stopShooter = new StopShooter(m_shooterSubsystem);
+  SendableChooser<Trajectory> m_chooser = new SendableChooser<>();
+
+  String trajectory1JSON = "paths/YourPath.wpilib.json";
+  String trajectory2JSON = "paths/YourPath2.wpilib.json";
+  Path trajectoryPath1, trajectoryPath2;
+  //Trajectory trajectory = new Trajectory(); Use m_chooser.getSelected();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     m_driveSubsystem.setDefaultCommand(new TankDrive(m_driveSubsystem,
-    () -> driveJoystick.getRawAxis(1),
-    () -> driveJoystick.getRawAxis(5)));
+    () -> leftDriveController.getRawAxis(1),
+    () -> rightDriveController.getRawAxis(1)));
+
+    trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
+    trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
+
+    try {
+      m_chooser.setDefaultOption("Path 1", TrajectoryUtil.fromPathweaverJson(trajectoryPath1));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    try {
+      m_chooser.addOption("Path 2", TrajectoryUtil.fromPathweaverJson(trajectoryPath2));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    Shuffleboard.getTab("Autonomous").add(m_chooser);
   }
 
   /**
@@ -55,12 +95,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driveJoystick, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
-    new JoystickButton(driveJoystick, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
-    new JoystickButton(driveJoystick, OIConstants.kStartShooterButton).whenPressed(new StartShooter(m_shooterSubsystem));
-    new JoystickButton(driveJoystick, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
-    new JoystickButton(driveJoystick, OIConstants.kStartFeederButton).whenPressed(new FeedShooter(m_shooterSubsystem));
-    new JoystickButton(driveJoystick, OIConstants.kStopFeederButton).whenPressed(new StopFeeder(m_shooterSubsystem));
+    new JoystickButton(shootingController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
+    new JoystickButton(shootingController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
+    new JoystickButton(shootingController, OIConstants.kStartShooterButton).whenPressed(new StartShooter(m_shooterSubsystem));
+    new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
+    new JoystickButton(rightDriveController, OIConstants.kLiftIntakeButton).whenPressed(new LiftIntake(m_intakeSubsystem));
+    new JoystickButton(rightDriveController, OIConstants.kDropIntakeButton).whenPressed(new DropIntake(m_intakeSubsystem));
+    // Setup transport button (for testing)
   }
 
   /**
@@ -69,7 +110,59 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
+    // Create a voltage constraint to ensure we don't accelerate too fast
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(
+                DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            10);
+
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(
+                DriveConstants.kMaxSpeedMetersPerSecond,
+                DriveConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow.  All units in meters.
+    Trajectory exampleTrajectory =
+        TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(3, 0, new Rotation2d(0)),
+            // Pass config
+            config);
+
+    RamseteCommand ramseteCommand =
+        new RamseteCommand(
+            exampleTrajectory,
+            m_driveSubsystem::getPose,
+            new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
+            new SimpleMotorFeedforward(
+                DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            m_driveSubsystem::getWheelSpeeds,
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            // RamseteCommand passes volts to the callback
+            m_driveSubsystem::tankDriveVolts,
+            m_driveSubsystem);
+
+    // Reset odometry to the starting pose of the trajectory.
+    m_driveSubsystem.resetOdometry(exampleTrajectory.getInitialPose());
+
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> m_driveSubsystem.tankDriveVolts(0, 0));
   }
 }

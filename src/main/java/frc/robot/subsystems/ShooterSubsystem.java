@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,27 +12,38 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private final CANSparkMax shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorPort,CANSparkMax.MotorType.kBrushless);
-  private final CANSparkMax shooterFeedMotor = new CANSparkMax(ShooterConstants.kShooterFeedPort,CANSparkMax.MotorType.kBrushless);
-  private final Double servoSpeed = 0.5;
-  private final Servo intakeServo = new Servo(IntakeConstants.kIntakeServoPort);
+  private CANSparkMax shooterMotor;
+  private Servo shootingServoL, shootingServoR;
 
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
-    intakeServo.setSpeed(servoSpeed);
+    try {
+    shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorPort,CANSparkMax.MotorType.kBrushless);
+    shootingServoL = new Servo(ShooterConstants.kShooterServoLPort);
+    shootingServoR = new Servo(ShooterConstants.kShooterServoRPort);
+    shootingServoL.setSpeed(ShooterConstants.kShooterServoSpeed);
+    shootingServoR.setSpeed(ShooterConstants.kShooterServoSpeed);
+    }
+    catch (Exception e){
+      System.out.println("Shooter error: " + e + "\n");
+      e.printStackTrace();
+    }
   }
 
-  public void servoDown() {
-    intakeServo.setAngle(0);
+  public void servoDown(){
+    shootingServoL.setAngle(0);
+    shootingServoR.setAngle(0);
   }
 
-  public void servoUp() {
-    intakeServo.setAngle(180);
+  public void servoUp(){
+    shootingServoL.setAngle(180);
+    shootingServoR.setAngle(180);
   }
 
-  public void setShooterSpeed(double speed) {
+  public void setShooterSpeed(double speed){
     shooterMotor.set(speed);
+    System.out.println("setShooterSpeed called. Speed: " + speed);
   }
   
   public void setFeederSpeed(double speed) {
