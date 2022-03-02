@@ -5,22 +5,23 @@
 package frc.robot.commands.Teleop.Shooter;
 
 import frc.robot.subsystems.ShooterSubsystem;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An intake command that uses the driveSubsystem. */
-public class SetShooterSpeed extends CommandBase {
+public class SliderShooterSpeed extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
-  private double m_speed;
+  private final Joystick m_joystick;
 
   /**
    * Creates a new StartShooter command.
    *
    * @param shooterSubsystem The subsystem used by this command.
    */
-  public SetShooterSpeed(ShooterSubsystem shooterSubsystem, double speed) {
+  public SliderShooterSpeed(ShooterSubsystem shooterSubsystem, Joystick joystick) {
     m_shooterSubsystem = shooterSubsystem;
-    m_speed = speed;
+    m_joystick = joystick;
     addRequirements(m_shooterSubsystem);
   }
 
@@ -31,7 +32,7 @@ public class SetShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setShooterSpeed(m_speed);
+    m_shooterSubsystem.setShooterSpeed(-(m_joystick.getRawAxis(3) + 1)/2);
   }
 
   // Called once the command ends or is interrupted.

@@ -17,10 +17,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     public static final class DriveConstants{
-        public static final int kLeft1MotorPort = 1;
-        public static final int kLeft2MotorPort = 2;
-        public static final int kRight1MotorPort = 3;
-        public static final int kRight2MotorPort = 4;
+        public static final int kLeft1MotorPort = 2;
+        public static final int kLeft2MotorPort = 3;
+        public static final int kRight1MotorPort = 4;
+        public static final int kRight2MotorPort = 5;
 
         public static final double kSpeedMultiplier = 1.0;
 
@@ -58,7 +58,7 @@ public final class Constants {
         public static final int kIntakeLiftMotorPort = 7;
 
         public static final double kIntakeSpeed = 0.5;
-        public static final double kTransportSpeed = -0.2;
+        public static final double kTransportSpeed = -0.4;
     }
 
     public static final class ShooterConstants{
@@ -68,7 +68,7 @@ public final class Constants {
         public static final int kShooterServoLPort = 1;
         public static final int kShooterServoRPort = 2;
 
-        public static final double kShooterSpeed = -0.35;
+        public static final double kShooterSpeed = -0.50;
         public static final double kShooterServoSpeed = 0.5;
     }
 

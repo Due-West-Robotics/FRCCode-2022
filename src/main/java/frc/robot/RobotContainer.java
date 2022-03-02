@@ -103,7 +103,7 @@ public class RobotContainer {
     //new JoystickButton(rightDriveController, OIConstants.kDropIntakeButton).whenPressed(new DropIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStartTransportButton).whenPressed(new StartTransport(m_shooterSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopTransportButton).whenPressed(new StopTransport(m_shooterSubsystem));
-    // Setup transport button (for testing)
+    new JoystickButton(shootingController, 8).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController));
   }
 
   /**
