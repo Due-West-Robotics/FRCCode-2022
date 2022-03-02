@@ -58,22 +58,23 @@ public final class Constants {
         public static final int kIntakeLiftPort = 7;
 
         public static final double kIntakeSpeed = 0.5;
-        public static final double kTransportSpeed = 0.5;
+        public static final double kTransportSpeed = -0.2;
     }
 
     public static final class ShooterConstants{
-        public static final int kShooterMotorPort = 6;
+        public static final int kShooterMotorPort = 8;
+        public static final int kShooterFeedPort = 9;
 
         public static final int kShooterServoLPort = 1;
         public static final int kShooterServoRPort = 2;
 
-        public static final double kShooterSpeed = 0.5;
+        public static final double kShooterSpeed = -0.35;
         public static final double kShooterServoSpeed = 0.5;
     }
 
     public static final class ClimberConstants{
-        public static final int kClimber1MotorPort = 9;
-        public static final int kClimber2MotorPort = 10;
+        public static final int kClimber1MotorPort = 10;
+        public static final int kClimber2MotorPort = 11;
 
         public static final double kClimberSpeed = 0.5;
     }
