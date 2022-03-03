@@ -30,7 +30,7 @@ public class DropIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() < 100){ /* Set 100 to accurate number */
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() < 70){
       m_intakeSubsystem.setIntakeLifted(false);
     }
     else {

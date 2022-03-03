@@ -62,7 +62,6 @@ public class RobotContainer {
   String trajectory1JSON = "paths/YourPath.wpilib.json";
   String trajectory2JSON = "paths/YourPath2.wpilib.json";
   Path trajectoryPath1, trajectoryPath2;
-  //Trajectory trajectory = new Trajectory(); Use m_chooser.getSelected();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
