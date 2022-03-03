@@ -25,22 +25,23 @@ public class DropIntake extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_intakeSubsystem.setIntakeLifted(false);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() < 70){
-      m_intakeSubsystem.setIntakeLifted(false);
-    }
-    else {
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() > 20){
       finished = true;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_intakeSubsystem.stopIntakeLifter();
+  }
 
   // Returns true when the command should end.
   @Override

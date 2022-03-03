@@ -97,8 +97,9 @@ public final class Constants {
         public static final int kStopShooterButton = 5;
         public static final int kStartTransportButton = 1;
         public static final int kStopTransportButton = 4;
-        public static final int kLiftIntakeButton = 12;
-        public static final int kDropIntakeButton = 11;
+        public static final int kLiftIntakeButton = 9;
+        public static final int kDropIntakeButton = 10;
+        public static final int kSliderShooterButton = 8;
     }
 
 }

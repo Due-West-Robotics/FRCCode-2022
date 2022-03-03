@@ -45,6 +45,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
   }
 
+  public void stopIntakeLifter(){
+    System.out.println("stopIntakeLifter called.");
+    intakeMotor.set(0.0);
+  }
+
   public double getIntakeLifterMotorPosition(){
     return intakeLifterMotorEncoder.getPosition();
   }
