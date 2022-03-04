@@ -98,8 +98,8 @@ public class RobotContainer {
     new JoystickButton(shootingController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStartShooterButton).whenPressed(new StartShooter(m_shooterSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kLiftIntakeButton).whenPressed(new LiftIntake(m_intakeSubsystem));
-    new JoystickButton(shootingController, OIConstants.kDropIntakeButton).whenPressed(new DropIntake(m_intakeSubsystem));
+    new JoystickButton(shootingController, OIConstants.kLiftIntakeButton).whenPressed(new ShooterHoodUp(m_shooterSubsystem));
+    new JoystickButton(shootingController, OIConstants.kDropIntakeButton).whenPressed(new ShooterHoodDown(m_shooterSubsystem));
     new JoystickButton(shootingController, OIConstants.kStartTransportButton).whenPressed(new StartTransport(m_shooterSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopTransportButton).whenPressed(new StopTransport(m_shooterSubsystem));
     new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController));

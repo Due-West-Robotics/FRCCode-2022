@@ -56,6 +56,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterMotor.get());
+    SmartDashboard.putNumber("Left Servo", shootingServoL.getAngle());
+    SmartDashboard.putNumber("Right Servo", shootingServoR.getAngle());
   }
 
   @Override
