@@ -22,14 +22,13 @@ public final class Constants {
         public static final int kRight1MotorPort = 4;
         public static final int kRight2MotorPort = 5;
 
-        public static final double kSpeedMultiplier = 1.0;
+        public static final double kSpeedMultiplier = 0.5;
 
         public static final int kLeftControllerPort = 0;
         public static final int kRightControllerPort = 1;
         public static final int kShootingControllerPort = 2;
 
-        public static final double kControllerDeadZone = 0.05;
-
+        public static final double kControllerDeadZone = 0.01;
 
         // Docs at https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html
         // These need to be changed to fit our robot.
@@ -66,9 +65,11 @@ public final class Constants {
         public static final int kTransportMotorPort = 9;
 
         public static final int kShooterServoLPort = 1;
-        public static final int kShooterServoRPort = 2;
+        public static final int kShooterServoRPort = 0;
 
-        public static final double kShooterSpeed = -0.50;
+        public static final double kShooterLowGoalSpeed = -0.30;
+        public static final double kShooterHighGoalCloseSpeed = -0.50;
+        public static final double kShooterHighGoalFarSpeed = -0.60;
         public static final double kShooterServoSpeed = 0.5;
     }
 
@@ -91,15 +92,22 @@ public final class Constants {
     }
 
     public static final class OIConstants{
-        public static final int kStartIntakeButton = 2;
-        public static final int kStopIntakeButton = 3;
-        public static final int kStartShooterButton = 6;
-        public static final int kStopShooterButton = 5;
+
+        //driver 1 controllers
+        public static final int kStartIntakeButton = 3;
+        public static final int kStopIntakeButton = 4;
+        public static final int kStopShooterButton = 3;
         public static final int kStartTransportButton = 1;
-        public static final int kStopTransportButton = 4;
-        public static final int kLiftIntakeButton = 9;
-        public static final int kDropIntakeButton = 10;
-        public static final int kSliderShooterButton = 8;
+        public static final int kStopTransportButton = 1; // stops when released
+
+        //driver 2 controls
+        public static final int kStartShooterHighGoalFarButton = 4;
+        public static final int kStartShooterHighGoalCloseButton = 2;
+        public static final int kStartShooterLowGoalButton = 1;
+
+        //public static final int kLiftIntakeButton = 9;
+        //public static final int kDropIntakeButton = 10;
+        //public static final int kSliderShooterButton = 8;
     }
 
 }

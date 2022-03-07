@@ -25,16 +25,18 @@ public class LiftIntake extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    finished = false;
+    m_intakeSubsystem.setIntakeLifterSpeed(-0.4);
+    System.out.println("Starting Lift");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() > 0){
-      m_intakeSubsystem.setIntakeLifted(true);
-    }
-    else {
-      finished = true;
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() <= -44){
+      finished = true;  // Spins negative
+      System.out.println("Running Lift");
     }
   }
 
@@ -42,6 +44,8 @@ public class LiftIntake extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_intakeSubsystem.stopIntakeLifter();
+    m_intakeSubsystem.setLifterBrake();
+    System.out.println("Stopped");
   }
 
   // Returns true when the command should end.

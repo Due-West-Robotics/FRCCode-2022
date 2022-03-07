@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Teleop.Drive.*;
 import frc.robot.commands.Teleop.Intake.*;
 import frc.robot.commands.Teleop.Shooter.*;
@@ -37,7 +38,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,8 +73,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveSubsystem.setDefaultCommand(new TankDrive(m_driveSubsystem,
-    () -> leftDriveController.getRawAxis(1),
-    () -> rightDriveController.getRawAxis(1)));
+    () -> Math.pow(leftDriveController.getRawAxis(1),3),
+    () -> Math.pow(rightDriveController.getRawAxis(1),3)));
 
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
@@ -94,15 +99,24 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(shootingController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
-    new JoystickButton(shootingController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
-    new JoystickButton(shootingController, OIConstants.kStartShooterButton).whenPressed(new StartShooter(m_shooterSubsystem));
+    new POVButton(shootingController, 0).whenPressed(new LiftIntake(m_intakeSubsystem)); //dpad up
+    new POVButton(shootingController, 180).whenPressed(new DropIntake(m_intakeSubsystem)); //dpad down
+    new JoystickButton(rightDriveController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
+    new JoystickButton(leftDriveController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kLiftIntakeButton).whenPressed(new ShooterHoodUp(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kDropIntakeButton).whenPressed(new ShooterHoodDown(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kStartTransportButton).whenPressed(new StartTransport(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kStopTransportButton).whenPressed(new StopTransport(m_shooterSubsystem));
-    new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController));
+    Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
+    transportButton.whenPressed(new StartTransport(m_shooterSubsystem));
+    transportButton.whenReleased(new StopTransport(m_shooterSubsystem));
+    //new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController.getRawAxis(3)));
+    Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
+    startShooterLowGoalButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterLowGoalSpeed), new ShooterHoodDown(m_shooterSubsystem)));
+    Button startShooterHighGoalCloseButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalCloseButton);
+    startShooterHighGoalCloseButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalCloseSpeed), new ShooterHoodDown(m_shooterSubsystem)));
+    //startShooterHighGoalCloseButton.whenPressed(new ShooterHoodDown(m_shooterSubsystem));
+    Button startShooterHighGoalFarButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalFarButton);
+    startShooterHighGoalFarButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalFarSpeed), new ShooterHoodUp(m_shooterSubsystem)));
+    //startShooterHighGoalFarButton.whenPressed(new ShooterHoodUp(m_shooterSubsystem));
+
   }
 
   /**

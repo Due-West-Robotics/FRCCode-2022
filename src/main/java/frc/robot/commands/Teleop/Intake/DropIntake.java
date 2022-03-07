@@ -26,14 +26,17 @@ public class DropIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intakeSubsystem.setIntakeLifted(false);
+    finished = false;
+    m_intakeSubsystem.setIntakeLifterSpeed(0.25);
+    System.out.println("Starting Drop");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() > 20){
-      finished = true;
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() >= 0){
+      finished = true; // Spins positive
+      System.out.println("Running Drop");
     }
   }
 
@@ -41,6 +44,8 @@ public class DropIntake extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_intakeSubsystem.stopIntakeLifter();
+    m_intakeSubsystem.setLifterCoast();
+    System.out.println("Stopped");
   }
 
   // Returns true when the command should end.

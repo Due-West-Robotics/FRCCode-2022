@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An intake command that uses the driveSubsystem. */
 public class SliderShooterSpeed extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
-  private final Joystick m_joystick;
+  private final double m_speed;
 
   /**
    * Creates a new StartShooter command.
    *
    * @param shooterSubsystem The subsystem used by this command.
    */
-  public SliderShooterSpeed(ShooterSubsystem shooterSubsystem, Joystick joystick) {
+  public SliderShooterSpeed(ShooterSubsystem shooterSubsystem, double speed) {
     m_shooterSubsystem = shooterSubsystem;
-    m_joystick = joystick;
-    addRequirements(m_shooterSubsystem);
+    m_speed = speed;
+    addRequirements(m_shooterSubsystem);                                                          
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +31,7 @@ public class SliderShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setShooterSpeed(-(m_joystick.getRawAxis(3) + 1)/2);
+    m_shooterSubsystem.setShooterSpeed(-(m_speed + 1)/2);
   }
 
   // Called once the command ends or is interrupted.

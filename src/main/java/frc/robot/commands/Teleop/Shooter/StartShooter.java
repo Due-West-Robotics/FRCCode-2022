@@ -12,14 +12,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An intake command that uses the driveSubsystem. */
 public class StartShooter extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
-
+  
+  double m_power;
   /**
    * Creates a new StartShooter command.
    *
    * @param shooterSubsystem The subsystem used by this command.
    */
-  public StartShooter(ShooterSubsystem shooterSubsystem) {
+  public StartShooter(ShooterSubsystem shooterSubsystem, double power) {
     m_shooterSubsystem = shooterSubsystem;
+    m_power = power;
     addRequirements(m_shooterSubsystem);
   }
 
@@ -30,7 +32,7 @@ public class StartShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setShooterSpeed(ShooterConstants.kShooterSpeed);
+    m_shooterSubsystem.setShooterSpeed(m_power);
   }
 
   // Called once the command ends or is interrupted.

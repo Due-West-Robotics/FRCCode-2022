@@ -25,6 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shootingServoR = new Servo(ShooterConstants.kShooterServoRPort);
     shootingServoL.setSpeed(ShooterConstants.kShooterServoSpeed);
     shootingServoR.setSpeed(ShooterConstants.kShooterServoSpeed);
+    servoDown();
     }
     catch (Exception e){
       System.out.println("Shooter error: " + e + "\n");
@@ -34,12 +35,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void servoDown(){
     shootingServoL.setAngle(0);
-    shootingServoR.setAngle(0);
+    shootingServoR.setAngle(180);
   }
 
   public void servoUp(){
-    shootingServoL.setAngle(180);
-    shootingServoR.setAngle(180);
+    shootingServoL.setAngle(110);
+    shootingServoR.setAngle(70);
   }
 
   public void setShooterSpeed(double speed){

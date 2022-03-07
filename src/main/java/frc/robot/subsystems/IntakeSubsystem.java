@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,10 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeLifterMotor = new CANSparkMax(IntakeConstants.kIntakeLiftMotorPort, CANSparkMax.MotorType.kBrushless);
       intakeLifterMotorEncoder = intakeLifterMotor.getEncoder();
       intakeLifterMotorEncoder.setPosition(0.0);
+      intakeLifterMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+      intakeLifterMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+      intakeLifterMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 40.0f);
+      intakeLifterMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -40.0f);
     }
     catch (Exception e){
       System.out.println("Intake error: " + e + "\n");
@@ -35,19 +40,23 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("setIntakeSpeed called. Speed: " + speed);
   }
 
-  public void setIntakeLifted(boolean setLifted){
-    System.out.println("setIntakeLifted called. setLifted = " + setLifted);
-    if (setLifted){
-      intakeLifterMotor.set(-0.25);
-    }
-    else {
-      intakeLifterMotor.set(0.25);
-    }
+  public void setIntakeLifterSpeed(double speed){
+    System.out.println("setIntakeLifterSpeed called. setLifted = " + speed);
+    intakeLifterMotor.set(speed);
   }
 
   public void stopIntakeLifter(){
     System.out.println("stopIntakeLifter called.");
-    intakeMotor.set(0.0);
+    intakeLifterMotor.set(0.0f);
+    intakeMotor.stopMotor();
+  }
+
+  public void setLifterBrake(){
+    intakeLifterMotor.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void setLifterCoast(){
+    intakeLifterMotor.setIdleMode(IdleMode.kCoast);
   }
 
   public double getIntakeLifterMotorPosition(){
