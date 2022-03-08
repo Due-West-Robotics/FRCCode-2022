@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shootingServoR = new Servo(ShooterConstants.kShooterServoRPort);
     shootingServoL.setSpeed(ShooterConstants.kShooterServoSpeed);
     shootingServoR.setSpeed(ShooterConstants.kShooterServoSpeed);
+    transportMotor.setIdleMode(IdleMode.kCoast);
     servoDown();
     }
     catch (Exception e){

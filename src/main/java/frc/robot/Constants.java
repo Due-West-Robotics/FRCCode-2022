@@ -57,7 +57,7 @@ public final class Constants {
         public static final int kIntakeLiftMotorPort = 7;
 
         public static final double kIntakeSpeed = 0.5;
-        public static final double kTransportSpeed = -0.4;
+        public static final double kTransportSpeed = -0.3;
     }
 
     public static final class ShooterConstants{

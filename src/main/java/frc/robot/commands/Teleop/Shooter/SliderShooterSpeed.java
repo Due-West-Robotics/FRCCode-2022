@@ -5,7 +5,6 @@
 package frc.robot.commands.Teleop.Shooter;
 
 import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An intake command that uses the driveSubsystem. */

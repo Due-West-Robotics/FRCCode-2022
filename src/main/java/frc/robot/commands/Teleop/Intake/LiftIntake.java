@@ -35,7 +35,7 @@ public class LiftIntake extends CommandBase {
   @Override
   public void execute() {
     if (m_intakeSubsystem.getIntakeLifterMotorPosition() <= -44){
-      finished = true;  // Spins negative
+      finished = true;
       System.out.println("Running Lift");
     }
   }

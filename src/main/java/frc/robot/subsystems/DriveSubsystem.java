@@ -40,6 +40,10 @@ public class DriveSubsystem extends SubsystemBase {
       m_drive = new DifferentialDrive(leftMotors, rightMotors);
       encoderL = motor1L.getEncoder();
       encoderR = motor1R.getEncoder();
+      encoderL.setVelocityConversionFactor(0.00398982267005903741284755709676/10.71);
+      encoderR.setVelocityConversionFactor(0.00398982267005903741284755709676/10.71);
+      encoderL.setPositionConversionFactor(0.00398982267005903741284755709676/10.71);
+      encoderR.setPositionConversionFactor(0.00398982267005903741284755709676/10.71);
       leftMotors.setInverted(true);
       resetEncoders();
     }

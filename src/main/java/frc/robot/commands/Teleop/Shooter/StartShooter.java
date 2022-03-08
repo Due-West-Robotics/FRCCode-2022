@@ -4,12 +4,11 @@
 
 package frc.robot.commands.Teleop.Shooter;
 
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An intake command that uses the driveSubsystem. */
+/** An intake command that uses the shooterSubsystem. */
 public class StartShooter extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
   

@@ -35,7 +35,7 @@ public class DropIntake extends CommandBase {
   @Override
   public void execute() {
     if (m_intakeSubsystem.getIntakeLifterMotorPosition() >= 0){
-      finished = true; // Spins positive
+      finished = true;
       System.out.println("Running Drop");
     }
   }

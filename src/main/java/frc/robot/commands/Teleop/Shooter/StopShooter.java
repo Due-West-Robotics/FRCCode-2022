@@ -8,7 +8,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An intake command that uses the driveSubsystem. */
+/** An intake command that uses the ShooterSubsystem. */
 public class StopShooter extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
 
