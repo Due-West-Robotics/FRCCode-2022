@@ -22,7 +22,7 @@ public final class Constants {
         public static final int kRight1MotorPort = 4;
         public static final int kRight2MotorPort = 5;
 
-        public static final double kSpeedMultiplier = 0.5;
+        public static final double kSpeedMultiplier = 1.0;
 
         public static final int kLeftControllerPort = 0;
         public static final int kRightControllerPort = 1;
@@ -58,6 +58,8 @@ public final class Constants {
 
         public static final double kIntakeSpeed = 0.5;
         public static final double kTransportSpeed = -0.3;
+        public static final double kReverseIntakeSpeed = -0.25;
+        public static final double KReverseTransportSpeed = 0.15;
     }
 
     public static final class ShooterConstants{
@@ -67,9 +69,9 @@ public final class Constants {
         public static final int kShooterServoLPort = 1;
         public static final int kShooterServoRPort = 0;
 
-        public static final double kShooterLowGoalSpeed = -0.30;
-        public static final double kShooterHighGoalCloseSpeed = -0.50;
-        public static final double kShooterHighGoalFarSpeed = -0.60;
+        public static final double kShooterLowGoalSpeed = -0.25;
+        public static final double kShooterHighGoalCloseSpeed = -0.40;
+        public static final double kShooterHighGoalFarSpeed = -0.50;
         public static final double kShooterServoSpeed = 0.5;
     }
 
@@ -104,6 +106,7 @@ public final class Constants {
         public static final int kStartShooterHighGoalFarButton = 4;
         public static final int kStartShooterHighGoalCloseButton = 2;
         public static final int kStartShooterLowGoalButton = 1;
+        public static final int kReverseIntakeButton = 8;
 
         //public static final int kLiftIntakeButton = 9;
         //public static final int kDropIntakeButton = 10;

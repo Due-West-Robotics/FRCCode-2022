@@ -4,53 +4,42 @@
 
 package frc.robot.commands.Teleop.Intake;
 
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An intake command that uses the driveSubsystem. */
-public class DropIntake extends CommandBase {
+public class ReverseIntake extends CommandBase {
   private final IntakeSubsystem m_intakeSubsystem;
-  private boolean finished = false;
 
   /**
-   * Creates a new StartIntake command.
+   * Creates a new ReverseIntake command.
    *
    * @param intakeSubsystem The subsystem used by this command.
    */
-  public DropIntake(IntakeSubsystem intakeSubsystem) {
+  public ReverseIntake(IntakeSubsystem intakeSubsystem) {
     m_intakeSubsystem = intakeSubsystem;
     addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    finished = false;
-    m_intakeSubsystem.setIntakeLifterSpeed(0.25);
-    System.out.println("Starting Drop");
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() >= 40){
-      finished = true;
-      System.out.println("Running Drop");
-    }
+    m_intakeSubsystem.setIntakeSpeed(IntakeConstants.kReverseIntakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_intakeSubsystem.stopIntakeLifter();
-    m_intakeSubsystem.setLifterCoast();
-    System.out.println("Stopped");
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return true;
   }
 }

@@ -34,7 +34,7 @@ public class LiftIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() <= -44){
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() <= 0){
       finished = true;
       System.out.println("Running Lift");
     }

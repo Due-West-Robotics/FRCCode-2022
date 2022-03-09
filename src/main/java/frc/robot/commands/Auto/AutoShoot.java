@@ -3,7 +3,6 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Teleop.Intake.DropIntake;
 import frc.robot.commands.Teleop.Intake.StartTransport;
 import frc.robot.commands.Teleop.Intake.StopTransport;
 import frc.robot.commands.Teleop.Shooter.ShooterHoodDown;
@@ -23,8 +22,7 @@ public class AutoShoot extends SequentialCommandGroup{
             new StartTransport(m_shooter),
             new WaitCommand(3),
             new StopShooter(m_shooter),
-            new StopTransport(m_shooter));
+            new StopTransport(m_shooter),
+            new AutoDriveTime(m_drive, 0.5, 0.5, 2));
       }
-
-
 }

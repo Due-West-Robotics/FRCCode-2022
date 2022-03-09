@@ -19,8 +19,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.AutoShoot;
-import frc.robot.commands.Auto.NavigateToPath;
-import frc.robot.commands.Auto.TestMeterDrive;
 import frc.robot.commands.Teleop.Drive.*;
 import frc.robot.commands.Teleop.Intake.*;
 import frc.robot.commands.Teleop.Shooter.*;
@@ -98,6 +96,9 @@ public class RobotContainer {
     Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
     transportButton.whenPressed(new StartTransport(m_shooterSubsystem));
     transportButton.whenReleased(new StopTransport(m_shooterSubsystem));
+    Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
+    reverseIntake.whenPressed(new ReverseTransport(m_shooterSubsystem));
+    reverseIntake.whenReleased(new StopTransport(m_shooterSubsystem));
     //new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController.getRawAxis(3)));
     Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
     startShooterLowGoalButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterLowGoalSpeed), new ShooterHoodDown(m_shooterSubsystem)));
