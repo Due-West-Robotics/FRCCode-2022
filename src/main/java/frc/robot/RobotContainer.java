@@ -28,6 +28,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -97,8 +98,8 @@ public class RobotContainer {
     transportButton.whenPressed(new StartTransport(m_shooterSubsystem));
     transportButton.whenReleased(new StopTransport(m_shooterSubsystem));
     Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
-    reverseIntake.whenPressed(new ReverseTransport(m_shooterSubsystem));
-    reverseIntake.whenReleased(new StopTransport(m_shooterSubsystem));
+    reverseIntake.whenPressed(new ParallelCommandGroup(new ReverseIntake(m_intakeSubsystem), new ReverseTransport(m_shooterSubsystem)));
+    reverseIntake.whenReleased(new ParallelCommandGroup(new StopIntake(m_intakeSubsystem), new StopTransport(m_shooterSubsystem)));
     //new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController.getRawAxis(3)));
     Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
     startShooterLowGoalButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterLowGoalSpeed), new ShooterHoodDown(m_shooterSubsystem)));

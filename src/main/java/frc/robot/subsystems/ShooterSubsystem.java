@@ -42,8 +42,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void servoUp(){
-    shootingServoL.setAngle(100);
-    shootingServoR.setAngle(80);
+    shootingServoL.setAngle(90);
+    shootingServoR.setAngle(90);
   }
 
   public void setShooterSpeed(double speed){
