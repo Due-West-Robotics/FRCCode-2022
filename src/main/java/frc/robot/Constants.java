@@ -69,7 +69,7 @@ public final class Constants {
         public static final int kShooterServoLPort = 1;
         public static final int kShooterServoRPort = 0;
 
-        public static final double kShooterLowGoalSpeed = -0.20;
+        public static final double kShooterLowGoalSpeed = -0.23;
         public static final double kShooterHighGoalCloseSpeed = -0.40;
         public static final double kShooterHighGoalFarSpeed = -0.50;
         public static final double kShooterServoSpeed = 0.5;

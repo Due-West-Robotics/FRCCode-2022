@@ -100,16 +100,12 @@ public class RobotContainer {
     Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
     reverseIntake.whenPressed(new ParallelCommandGroup(new ReverseIntake(m_intakeSubsystem), new ReverseTransport(m_shooterSubsystem)));
     reverseIntake.whenReleased(new ParallelCommandGroup(new StopIntake(m_intakeSubsystem), new StopTransport(m_shooterSubsystem)));
-    //new JoystickButton(shootingController, OIConstants.kSliderShooterButton).whenPressed(new SliderShooterSpeed(m_shooterSubsystem, leftDriveController.getRawAxis(3)));
     Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
     startShooterLowGoalButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterLowGoalSpeed), new ShooterHoodDown(m_shooterSubsystem)));
     Button startShooterHighGoalCloseButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalCloseButton);
     startShooterHighGoalCloseButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalCloseSpeed), new ShooterHoodDown(m_shooterSubsystem)));
-    //startShooterHighGoalCloseButton.whenPressed(new ShooterHoodDown(m_shooterSubsystem));
     Button startShooterHighGoalFarButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalFarButton);
     startShooterHighGoalFarButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalFarSpeed), new ShooterHoodUp(m_shooterSubsystem)));
-    //startShooterHighGoalFarButton.whenPressed(new ShooterHoodUp(m_shooterSubsystem));
-
   }
 
   /**

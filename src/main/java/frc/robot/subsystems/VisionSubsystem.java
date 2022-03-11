@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -104,12 +105,12 @@ public class VisionSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("tv", limelightTableEntry.getEntry("tv").getDouble(0));
-        SmartDashboard.putNumber("tx", limelightTableEntry.getEntry("tx").getDouble(0));
-        SmartDashboard.putNumber("ty", limelightTableEntry.getEntry("ty").getDouble(0));
-        SmartDashboard.putNumber("ta", limelightTableEntry.getEntry("ta").getDouble(0));
-        SmartDashboard.putNumber("camMode", limelightTableEntry.getEntry("camMode").getDouble(-1));
-        SmartDashboard.putNumber("ledmode", limelightTableEntry.getEntry("ledMode").getDouble(-1));
-        SmartDashboard.putNumber("pipeline", limelightTableEntry.getEntry("getpipe").getDouble(-1));
+        // SmartDashboard.putNumber("tv", limelightTableEntry.getEntry("tv").getDouble(0));
+        // SmartDashboard.putNumber("tx", limelightTableEntry.getEntry("tx").getDouble(0));
+        // SmartDashboard.putNumber("ty", limelightTableEntry.getEntry("ty").getDouble(0));
+        // SmartDashboard.putNumber("ta", limelightTableEntry.getEntry("ta").getDouble(0));
+        // SmartDashboard.putNumber("camMode", limelightTableEntry.getEntry("camMode").getDouble(-1));
+        // SmartDashboard.putNumber("ledmode", limelightTableEntry.getEntry("ledMode").getDouble(-1));
+        // SmartDashboard.putNumber("pipeline", limelightTableEntry.getEntry("getpipe").getDouble(-1));
     }
 }
