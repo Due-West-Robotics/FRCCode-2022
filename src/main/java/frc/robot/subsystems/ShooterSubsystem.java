@@ -41,6 +41,11 @@ public class ShooterSubsystem extends SubsystemBase {
     shootingServoR.setAngle(160);
   }
 
+  public void servoDownClose(){
+    shootingServoL.setAngle(50);
+    shootingServoR.setAngle(130);
+  }
+
   public void servoUp(){
     shootingServoL.setAngle(90);
     shootingServoR.setAngle(90);

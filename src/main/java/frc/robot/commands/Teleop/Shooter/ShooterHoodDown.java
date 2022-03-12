@@ -11,14 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An intake command that uses the driveSubsystem. */
 public class ShooterHoodDown extends CommandBase {
   private final ShooterSubsystem m_shooterSubsystem;
+  private boolean m_close;
 
   /**
    * Creates a new StartShooter command.
    *
    * @param shooterSubsystem The subsystem used by this command.
+   * @param close
    */
-  public ShooterHoodDown(ShooterSubsystem shooterSubsystem) {
+  public ShooterHoodDown(ShooterSubsystem shooterSubsystem, boolean close) {
     m_shooterSubsystem = shooterSubsystem;
+    m_close = close;
     addRequirements(m_shooterSubsystem);
   }
 
@@ -29,7 +32,12 @@ public class ShooterHoodDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.servoDown();
+    if (m_close){
+      m_shooterSubsystem.servoDownClose();
+    }
+    else {
+      m_shooterSubsystem.servoDown();
+    }
   }
 
   // Called once the command ends or is interrupted.

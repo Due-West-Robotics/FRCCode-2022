@@ -16,7 +16,7 @@ public class AutoShoot extends SequentialCommandGroup{
     
     public AutoShoot(DriveSubsystem m_drive, ShooterSubsystem m_shooter, IntakeSubsystem m_intake) {
         addCommands(
-            new ShooterHoodDown(m_shooter),
+            new ShooterHoodDown(m_shooter, false),
             new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
             new AutoDriveTime(m_drive, 0.3, 0.3, 0.5),
             new WaitCommand(3),
