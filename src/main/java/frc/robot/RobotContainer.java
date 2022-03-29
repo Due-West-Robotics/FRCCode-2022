@@ -7,7 +7,6 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -18,7 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.Auto.AutoDoNothing;
 import frc.robot.commands.Auto.AutoShoot;
+import frc.robot.commands.Auto.NavigateToPath;
+import frc.robot.commands.Teleop.Climber.BrakeClimber;
+import frc.robot.commands.Teleop.Climber.ReleaseClimber;
+import frc.robot.commands.Teleop.Climber.RunClimber;
 import frc.robot.commands.Teleop.Drive.*;
 import frc.robot.commands.Teleop.Intake.*;
 import frc.robot.commands.Teleop.Shooter.*;
@@ -52,7 +56,7 @@ public class RobotContainer {
   private Joystick rightDriveController = new Joystick(DriveConstants.kRightControllerPort);
   private Joystick shootingController = new Joystick(DriveConstants.kShootingControllerPort);
 
-  SendableChooser<Trajectory> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   String trajectory1JSON = "paths/YourPath.wpilib.json";
   String trajectory2JSON = "paths/YourPath2.wpilib.json";
@@ -69,16 +73,16 @@ public class RobotContainer {
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
 
+    m_chooser.setDefaultOption("One Ball Auto", new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Nothing", new AutoDoNothing());
+
     try {
-      m_chooser.setDefaultOption("Path 1", TrajectoryUtil.fromPathweaverJson(trajectoryPath1));
+      m_chooser.addOption("Trajectory Path 1", new NavigateToPath(m_driveSubsystem, TrajectoryUtil.fromPathweaverJson(trajectoryPath1)));
+      m_chooser.addOption("Trajectory Path 2", new NavigateToPath(m_driveSubsystem, TrajectoryUtil.fromPathweaverJson(trajectoryPath2)));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    try {
-      m_chooser.addOption("Path 2", TrajectoryUtil.fromPathweaverJson(trajectoryPath2));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
     Shuffleboard.getTab("Autonomous").add(m_chooser);
   }
 
@@ -94,6 +98,9 @@ public class RobotContainer {
     new JoystickButton(rightDriveController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
     new JoystickButton(leftDriveController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
+    new JoystickButton(shootingController, OIConstants.kRunClimberButton).whenPressed(new RunClimber(m_climberSubsystem));
+    new JoystickButton(shootingController, OIConstants.kClimberBrakeButton).whenPressed(new BrakeClimber(m_climberSubsystem));
+    new JoystickButton(shootingController, OIConstants.kClimberCoastButton).whenPressed(new ReleaseClimber(m_climberSubsystem));
     Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
     transportButton.whenPressed(new StartTransport(m_shooterSubsystem));
     transportButton.whenReleased(new StopTransport(m_shooterSubsystem));

@@ -1,17 +1,17 @@
 package frc.robot.commands.Auto;
 
-import java.util.List;
+//import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.math.geometry.Rotation2d;
+// import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+// import edu.wpi.first.math.trajectory.TrajectoryConfig;
+// import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+// import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants.DriveConstants;
@@ -19,17 +19,19 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class NavigateToPath extends CommandBase {
     private final DriveSubsystem m_drive;
+    private final Trajectory m_trajectory;
     private boolean finished = false;
     
-    public NavigateToPath(DriveSubsystem driveSubsystem){
+    public NavigateToPath(DriveSubsystem driveSubsystem, Trajectory trajectory){
         m_drive = driveSubsystem;
+        m_trajectory = trajectory;
         addRequirements(m_drive);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        var autoVoltageConstraint =
+ /*     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
                 DriveConstants.ksVolts,
@@ -58,11 +60,12 @@ public class NavigateToPath extends CommandBase {
             // End 3 meters straight ahead of where we started, facing forward
             new Pose2d(3, 0, new Rotation2d(0)),
             // Pass config
-            config);
+            config);*/
+            
     
     RamseteCommand ramseteCommand =
         new RamseteCommand(
-            exampleTrajectory,
+            m_trajectory,
             m_drive::getPose,
             new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
             new SimpleMotorFeedforward(
@@ -77,7 +80,7 @@ public class NavigateToPath extends CommandBase {
             m_drive::tankDriveVolts,
             m_drive);
 
-            m_drive.resetOdometry(exampleTrajectory.getInitialPose());
+            m_drive.resetOdometry(m_trajectory.getInitialPose());
 
             ramseteCommand.andThen(() -> finished = true);
 

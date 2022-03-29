@@ -5,19 +5,27 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.Constants.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-  private CANSparkMax climbMotor1;
-  private CANSparkMax climbMotor2;
+  private CANSparkMax climbMotor1, climbMotor2;
+  private RelativeEncoder climbMotor1Encoder, climbMotor2Encoder;
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
     try{
       climbMotor1 = new CANSparkMax(ClimberConstants.kClimber1MotorPort,CANSparkMax.MotorType.kBrushless);
       climbMotor2 = new CANSparkMax(ClimberConstants.kClimber2MotorPort,CANSparkMax.MotorType.kBrushless);
+      climbMotor1Encoder = climbMotor1.getEncoder();
+      climbMotor2Encoder = climbMotor2.getEncoder();
+
+      setClimberBrake();
     }
     catch(Exception e){
       System.out.println("Climber error: " + e + "\n");
@@ -30,10 +38,37 @@ public class ClimberSubsystem extends SubsystemBase {
     climbMotor2.set(speed);
     System.out.println("setClimberSpeed called. Speed: " + speed);
   }
+  
+  public double getLeftClimberPosition() {
+    return climbMotor2Encoder.getPosition();
+  }
+
+  public double getRightClimberPosition() {
+    return climbMotor1Encoder.getPosition();
+  }
+
+  public void setClimberBrake() {
+    climbMotor1.setIdleMode(IdleMode.kBrake);
+    climbMotor2.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void setClimberCoast() {
+    climbMotor1.setIdleMode(IdleMode.kCoast);
+    climbMotor2.setIdleMode(IdleMode.kCoast);
+  }
+
+  public boolean climberBrakeOn() {
+    if (climbMotor1.getIdleMode() == IdleMode.kBrake){
+      return true;
+    }
+    return false;
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Climber", getLeftClimberPosition());
+    SmartDashboard.putNumber("Right Climber", getRightClimberPosition());
+    SmartDashboard.putBoolean("Climber Brake", climberBrakeOn());
   }
 
   @Override

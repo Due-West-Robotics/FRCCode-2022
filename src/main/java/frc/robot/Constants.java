@@ -44,6 +44,7 @@ public final class Constants {
 
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kDriveGearRatio = 1/10.71;
 
         // Should be checked
         public static final double kRamseteB = 2;
@@ -79,7 +80,8 @@ public final class Constants {
         public static final int kClimber1MotorPort = 10;
         public static final int kClimber2MotorPort = 11;
 
-        public static final double kClimberSpeed = 0.5;
+        public static final double kClimberSpeed = 0.1;
+        public static final double kClimberRaisedPosition = 60;
     }
 
     public static final class VisionConstants{
@@ -101,6 +103,9 @@ public final class Constants {
         public static final int kStopShooterButton = 3;
         public static final int kStartTransportButton = 1;
         public static final int kStopTransportButton = 1; // stops when released
+        public static final int kRunClimberButton = 7;
+        public static final int kClimberBrakeButton = 5;
+        public static final int kClimberCoastButton = 6;
 
         //driver 2 controls
         public static final int kStartShooterHighGoalFarButton = 4;
