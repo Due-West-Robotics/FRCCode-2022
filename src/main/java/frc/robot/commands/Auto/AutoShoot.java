@@ -18,12 +18,12 @@ public class AutoShoot extends SequentialCommandGroup{
         addCommands(
             new ShooterHoodDown(m_shooter, false),
             new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
-            new AutoDriveTime(m_drive, 0.3, 0.3, 0.5),
+            new AutoDriveTime(m_drive, 0.3, 0.3, 0.5, false),
             new WaitCommand(3),
             new StartTransport(m_shooter),
             new WaitCommand(3),
             new StopShooter(m_shooter),
             new StopTransport(m_shooter),
-            new AutoDriveTime(m_drive, 0.5, 0.5, 2));
+            new AutoDriveTime(m_drive, 0.5, 0.5, 2, false));
       }
 }

@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.Constants.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -53,6 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
+      zeroHeading();
       m_odometry = new DifferentialDriveOdometry(ahrs.getRotation2d());
     }
     catch (Exception e){
@@ -115,16 +118,34 @@ public class DriveSubsystem extends SubsystemBase {
     return encoderR;
   }
 
+  public void setBrake() {
+    motor1L.setIdleMode(IdleMode.kBrake);
+    motor2L.setIdleMode(IdleMode.kBrake);
+    motor1R.setIdleMode(IdleMode.kBrake);
+    motor2R.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void setCoast() {
+    motor1L.setIdleMode(IdleMode.kCoast);
+    motor2L.setIdleMode(IdleMode.kCoast);
+    motor1R.setIdleMode(IdleMode.kCoast);
+    motor2R.setIdleMode(IdleMode.kCoast);
+  }
+
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  public void zeroHeading() {
-    ahrs.zeroYaw();
+  private void zeroHeading() {
+    ahrs.calibrate();
   }
 
   public double getHeading() {
     return ahrs.getRotation2d().getDegrees();
+  }
+
+  public double getRotation() {
+    return ahrs.getRoll();
   }
 
   public double getTurnRate() {
@@ -135,7 +156,9 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_odometry.update(ahrs.getRotation2d(), encoderL.getPosition(), encoderR.getPosition());
-    SmartDashboard.putNumber("Gyro", ahrs.getYaw());
+    SmartDashboard.putNumber("Roll", ahrs.getRoll());
+    SmartDashboard.putNumber("Pitch", ahrs.getPitch());
+    SmartDashboard.putNumber("Yaw", ahrs.getYaw());
     SmartDashboard.putNumber("Encoder L", encoderL.getPosition());
     SmartDashboard.putNumber("Encoder R", encoderR.getPosition());
     SmartDashboard.putNumber("Speed L", leftMotors.get());

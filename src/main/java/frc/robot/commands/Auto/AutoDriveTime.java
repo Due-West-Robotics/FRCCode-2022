@@ -13,25 +13,33 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class AutoDriveTime extends CommandBase {
   private final DriveSubsystem m_driveSubsystem;
   private double m_left, m_right, m_time;
-  private boolean finished = false;
+  private boolean finished, m_brake = false;
   private Timer timer;
   /**
    * Creates a new TankDrive command.
    *
    * @param driveSubsystem The subsystem used by this command.
+   * @param left Left motor speed
+   * @param right right motor speed
+   * @param time
+   * @param brake
    */
-  public AutoDriveTime(DriveSubsystem driveSubsystem, double left, double right, double time) {
+  public AutoDriveTime(DriveSubsystem driveSubsystem, double left, double right, double time, boolean brake) {
     m_driveSubsystem = driveSubsystem;
     timer = new Timer();
     m_left = left;
     m_right = right;
     m_time = time;
+    m_brake = brake;
     addRequirements(m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if (m_brake){
+      m_driveSubsystem.setBrake();
+    }
     timer.start();
   }
 
@@ -48,6 +56,7 @@ public class AutoDriveTime extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_driveSubsystem.TankDrive(0.0, 0.0);
+    m_driveSubsystem.setCoast();
   }
 
   // Returns true when the command should end.

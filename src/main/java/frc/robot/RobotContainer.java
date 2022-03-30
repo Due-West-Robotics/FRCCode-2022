@@ -19,6 +19,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.AutoDoNothing;
 import frc.robot.commands.Auto.AutoShoot;
+import frc.robot.commands.Auto.AutoShootWithExtraPickup;
 import frc.robot.commands.Auto.NavigateToPath;
 import frc.robot.commands.Teleop.Climber.BrakeClimber;
 import frc.robot.commands.Teleop.Climber.ReleaseClimber;
@@ -72,10 +73,13 @@ public class RobotContainer {
     () -> leftDriveController.getRawAxis(1),
     () -> rightDriveController.getRawAxis(1)));
 
+    m_climberSubsystem.setDefaultCommand(new RunClimber(m_climberSubsystem, () -> shootingController.getRawAxis(OIConstants.kClimberAxis)));
+
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
 
     m_chooser.setDefaultOption("One Ball Auto", new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Two Ball Auto (Experimental)", new AutoShootWithExtraPickup(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     m_chooser.addOption("Nothing", new AutoDoNothing());
 
     try {
@@ -95,29 +99,30 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //Button climberButton = new JoystickButton(shootingController, OIConstants.kRunClimberButton);
+    Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
+    Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
+    Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
+    Button startShooterHighGoalCloseButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalCloseButton);
+    Button startShooterHighGoalFarButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalFarButton);
     new POVButton(shootingController, 0).whenPressed(new LiftIntake(m_intakeSubsystem)); //dpad up
     new POVButton(shootingController, 180).whenPressed(new DropIntake(m_intakeSubsystem)); //dpad down
     new JoystickButton(rightDriveController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
     new JoystickButton(leftDriveController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
-    //new JoystickButton(shootingController, OIConstants.kRunClimberButton).whenPressed(new RunClimber(m_climberSubsystem));
     new JoystickButton(shootingController, OIConstants.kClimberBrakeButton).whenPressed(new BrakeClimber(m_climberSubsystem));
     new JoystickButton(shootingController, OIConstants.kClimberCoastButton).whenPressed(new ReleaseClimber(m_climberSubsystem));
-    Button climberButton = new JoystickButton(shootingController, OIConstants.kRunClimberButton);
-    climberButton.whenPressed(new StartClimber(m_climberSubsystem));
-    climberButton.whenReleased(new StopClimber(m_climberSubsystem));
-    Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
     transportButton.whenPressed(new StartTransport(m_shooterSubsystem));
     transportButton.whenReleased(new StopTransport(m_shooterSubsystem));
-    Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
     reverseIntake.whenPressed(new ParallelCommandGroup(new ReverseIntake(m_intakeSubsystem), new ReverseTransport(m_shooterSubsystem)));
     reverseIntake.whenReleased(new ParallelCommandGroup(new StopIntake(m_intakeSubsystem), new StopTransport(m_shooterSubsystem)));
-    Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
     startShooterLowGoalButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterLowGoalSpeed), new ShooterHoodDown(m_shooterSubsystem, true)));
-    Button startShooterHighGoalCloseButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalCloseButton);
     startShooterHighGoalCloseButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalCloseSpeed), new ShooterHoodDown(m_shooterSubsystem, false)));
-    Button startShooterHighGoalFarButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalFarButton);
     startShooterHighGoalFarButton.whenPressed(new SequentialCommandGroup(new StartShooter(m_shooterSubsystem, ShooterConstants.kShooterHighGoalFarSpeed), new ShooterHoodUp(m_shooterSubsystem)));
+  }
+
+  public void setDrivetrainCoast(){
+    m_driveSubsystem.setCoast();
   }
 
   /**
