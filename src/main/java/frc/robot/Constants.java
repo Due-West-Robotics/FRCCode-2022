@@ -113,7 +113,8 @@ public final class Constants {
         public static final int kStartShooterLowGoalButton = 1;
         public static final int kReverseIntakeButton = 8;
 
-        public static final int kClimberAxis = 5;
+        public static final int kLeftClimberAxis = 1;
+        public static final int kRightClimberAxis = 5;
     }
 
 }

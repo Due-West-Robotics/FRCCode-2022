@@ -21,7 +21,7 @@ public class StartClimber extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climberSubsystem.setClimberSpeed(ClimberConstants.kClimberSpeed);
+    m_climberSubsystem.setClimberSpeed(ClimberConstants.kClimberSpeed, ClimberConstants.kClimberSpeed);
   }
 
   // Called once the command ends or is interrupted.

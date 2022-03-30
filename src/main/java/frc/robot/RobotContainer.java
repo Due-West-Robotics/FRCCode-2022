@@ -73,7 +73,9 @@ public class RobotContainer {
     () -> leftDriveController.getRawAxis(1),
     () -> rightDriveController.getRawAxis(1)));
 
-    m_climberSubsystem.setDefaultCommand(new RunClimber(m_climberSubsystem, () -> shootingController.getRawAxis(OIConstants.kClimberAxis)));
+    m_climberSubsystem.setDefaultCommand(new RunClimber(m_climberSubsystem,
+    () -> shootingController.getRawAxis(OIConstants.kLeftClimberAxis),
+    () -> shootingController.getRawAxis(OIConstants.kRightClimberAxis)));
 
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
@@ -132,6 +134,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //return new NavigateToPath(m_driveSubsystem);
-    return new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+    return m_chooser.getSelected();
   }
 }
