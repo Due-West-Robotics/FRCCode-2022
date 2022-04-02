@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import frc.robot.Constants.*;
@@ -16,12 +17,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private CANSparkMax shooterMotor, transportMotor;
   private Servo shootingServoL, shootingServoR;
+  private RelativeEncoder shootingEncoder;
 
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
     try {
     shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorPort,CANSparkMax.MotorType.kBrushless);
+    shootingEncoder = shooterMotor.getEncoder();
     transportMotor = new CANSparkMax(ShooterConstants.kTransportMotorPort, CANSparkMax.MotorType.kBrushless);
     shootingServoL = new Servo(ShooterConstants.kShooterServoLPort);
     shootingServoR = new Servo(ShooterConstants.kShooterServoRPort);
@@ -56,15 +59,21 @@ public class ShooterSubsystem extends SubsystemBase {
     System.out.println("setShooterSpeed called. Speed: " + speed);
   }
 
+  public double getShooterSpeed() {
+    return shootingEncoder.getVelocity();
+  }
+
   public void setTransportSpeed(double speed){
     transportMotor.set(speed);
     System.out.println("setTransportSpeed called. Speed: " + speed);
   }
 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterMotor.get());
+    SmartDashboard.putNumber("Shooter Velocity", getShooterSpeed());
     SmartDashboard.putNumber("Left Servo", shootingServoL.getAngle());
     SmartDashboard.putNumber("Right Servo", shootingServoR.getAngle());
   }

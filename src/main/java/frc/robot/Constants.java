@@ -58,6 +58,8 @@ public final class Constants {
         public static final int kIntakeLiftMotorPort = 7;
 
         public static final double kIntakeSpeed = 0.40;
+        public static final double kIntakeLiftSpeed = -0.50;
+        public static final double kIntakeDropSpeed = 0.25;
         public static final double kTransportSpeed = -0.3;
         public static final double kReverseIntakeSpeed = -0.25;
         public static final double KReverseTransportSpeed = 0.15;

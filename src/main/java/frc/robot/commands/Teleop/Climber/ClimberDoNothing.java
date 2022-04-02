@@ -5,47 +5,36 @@
 package frc.robot.commands.Teleop.Climber;
 
 import frc.robot.subsystems.ClimberSubsystem;
-
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An intake command that uses the driveSubsystem. */
-public class RunClimber extends CommandBase {
+public class ClimberDoNothing extends CommandBase {
   private final ClimberSubsystem m_climberSubsystem;
-  private DoubleSupplier m_leftSpeed, m_rightSpeed;
-  private final double kSpeedMultiplier = -0.5;
 
   /**
    * Creates a new StartIntake command.
    *
    * @param intakeSubsystem The subsystem used by this command.
    */
-  public RunClimber(ClimberSubsystem climberSubsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
+  public ClimberDoNothing(ClimberSubsystem climberSubsystem) {
     m_climberSubsystem = climberSubsystem;
-    m_leftSpeed = leftSpeed;
-    m_rightSpeed = rightSpeed;
     addRequirements(m_climberSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putBoolean("Climber Enabled", true);
+    SmartDashboard.putBoolean("Climber Enabled", false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_climberSubsystem.setClimberSpeed(m_leftSpeed.getAsDouble() * kSpeedMultiplier, m_rightSpeed.getAsDouble() * kSpeedMultiplier);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_climberSubsystem.setClimberSpeed(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

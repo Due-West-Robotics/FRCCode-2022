@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Teleop.Intake;
 
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -27,7 +28,7 @@ public class DropIntake extends CommandBase {
   @Override
   public void initialize() {
     finished = false;
-    m_intakeSubsystem.setIntakeLifterSpeed(0.25);
+    m_intakeSubsystem.setIntakeLifterSpeed(IntakeConstants.kIntakeDropSpeed);
     System.out.println("Starting Drop");
   }
 

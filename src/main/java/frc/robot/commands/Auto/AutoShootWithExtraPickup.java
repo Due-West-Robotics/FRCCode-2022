@@ -19,24 +19,42 @@ public class AutoShootWithExtraPickup extends SequentialCommandGroup{
     
     public AutoShootWithExtraPickup(DriveSubsystem m_drive, ShooterSubsystem m_shooter, IntakeSubsystem m_intake) {
         addCommands(
+            // new ShooterHoodDown(m_shooter, false),
+            // new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
+            // new AutoDriveTime(m_drive, 0.3, 0.3, 0.65, true),
+            // new WaitCommand(2),
+            // new StartTransport(m_shooter),
+            // new WaitCommand(3),  // Transport time
+            // new StopShooter(m_shooter),
+            // new StopTransport(m_shooter),
+            // new AutoDriveTime(m_drive, -0.3, 0.3, 1, true),
+            // new DropIntake(m_intake),
+            // new WaitCommand(1),
+            // new StartIntake(m_intake),
+            // new AutoDriveTime(m_drive, -0.2, -0.2, 2, true),
+            // new StopIntake(m_intake),
+            // new AutoDriveTime(m_drive, 0.3, -0.3, 1, true),
+            // new AutoDriveTime(m_drive, -0.2, -0.2, 2, true),
+            // new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
+            // new WaitCommand(1),
+            // new StartTransport(m_shooter)
             new ShooterHoodDown(m_shooter, false),
-            new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
-            new AutoDriveTime(m_drive, 0.3, 0.3, 0.65, true),
-            new WaitCommand(2),
-            new StartTransport(m_shooter),
-            new WaitCommand(3),  // Transport time
-            new StopShooter(m_shooter),
-            new StopTransport(m_shooter),
-            new AutoDriveTime(m_drive, -0.3, 0.3, 1, true),
             new DropIntake(m_intake),
-            new WaitCommand(1),
             new StartIntake(m_intake),
-            new AutoDriveTime(m_drive, -0.2, -0.2, 2, true),
-            new StopIntake(m_intake),
-            new AutoDriveTime(m_drive, 0.3, -0.3, 1, true),
-            new AutoDriveTime(m_drive, -0.2, -0.2, 2, true),
+            new AutoDriveTime(m_drive, -0.4, -0.4, 2, true),
             new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
+            new AutoDriveTime(m_drive, 0.4, -0.4, 2.25, true), // Original 2.4
+            new AutoDriveTime(m_drive, -0.4, -0.4, 0.9, true),
             new WaitCommand(1),
-            new StartTransport(m_shooter));
+            new StartTransport(m_shooter),
+            new WaitCommand(0.5),
+            new StopTransport(m_shooter),
+            new WaitCommand(0.75),
+            new StartTransport(m_shooter),
+            new WaitCommand(2),
+            new StopIntake(m_intake),
+            new StopTransport(m_shooter),
+            new StopShooter(m_shooter)
+            );
       }
 }

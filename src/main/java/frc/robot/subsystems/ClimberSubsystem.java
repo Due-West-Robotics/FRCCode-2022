@@ -24,6 +24,7 @@ public class ClimberSubsystem extends SubsystemBase {
       climbMotor2 = new CANSparkMax(ClimberConstants.kClimber2MotorPort,CANSparkMax.MotorType.kBrushless);
       climbMotor1Encoder = climbMotor1.getEncoder();
       climbMotor2Encoder = climbMotor2.getEncoder();
+      climbMotor2.setInverted(true);
 
       setClimberBrake();
     }

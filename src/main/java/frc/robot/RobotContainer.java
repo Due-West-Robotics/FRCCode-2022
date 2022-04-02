@@ -20,12 +20,12 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.AutoDoNothing;
 import frc.robot.commands.Auto.AutoShoot;
 import frc.robot.commands.Auto.AutoShootWithExtraPickup;
+import frc.robot.commands.Auto.AutoTesting;
 import frc.robot.commands.Auto.NavigateToPath;
 import frc.robot.commands.Teleop.Climber.BrakeClimber;
+import frc.robot.commands.Teleop.Climber.ClimberDoNothing;
 import frc.robot.commands.Teleop.Climber.ReleaseClimber;
 import frc.robot.commands.Teleop.Climber.RunClimber;
-import frc.robot.commands.Teleop.Climber.StartClimber;
-import frc.robot.commands.Teleop.Climber.StopClimber;
 import frc.robot.commands.Teleop.Drive.*;
 import frc.robot.commands.Teleop.Intake.*;
 import frc.robot.commands.Teleop.Shooter.*;
@@ -33,7 +33,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
+//import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -53,7 +53,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
-  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  //private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
   private Joystick leftDriveController = new Joystick(DriveConstants.kLeftControllerPort);
   private Joystick rightDriveController = new Joystick(DriveConstants.kRightControllerPort);
@@ -73,9 +73,11 @@ public class RobotContainer {
     () -> leftDriveController.getRawAxis(1),
     () -> rightDriveController.getRawAxis(1)));
 
-    m_climberSubsystem.setDefaultCommand(new RunClimber(m_climberSubsystem,
-    () -> shootingController.getRawAxis(OIConstants.kLeftClimberAxis),
-    () -> shootingController.getRawAxis(OIConstants.kRightClimberAxis)));
+    // m_climberSubsystem.setDefaultCommand(new RunClimber(m_climberSubsystem,
+    // () -> shootingController.getRawAxis(OIConstants.kLeftClimberAxis),
+    // () -> shootingController.getRawAxis(OIConstants.kRightClimberAxis)));
+
+    m_climberSubsystem.setDefaultCommand(new ClimberDoNothing(m_climberSubsystem));
 
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
@@ -83,6 +85,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("One Ball Auto", new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     m_chooser.addOption("Two Ball Auto (Experimental)", new AutoShootWithExtraPickup(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     m_chooser.addOption("Nothing", new AutoDoNothing());
+    m_chooser.addOption("Testing", new AutoTesting(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     try {
       m_chooser.addOption("Trajectory Path 1", new NavigateToPath(m_driveSubsystem, TrajectoryUtil.fromPathweaverJson(trajectoryPath1)));
@@ -101,7 +104,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //Button climberButton = new JoystickButton(shootingController, OIConstants.kRunClimberButton);
+    Button climberButton = new JoystickButton(shootingController, OIConstants.kRunClimberButton);
     Button transportButton = new JoystickButton(rightDriveController, OIConstants.kStartTransportButton);
     Button reverseIntake = new JoystickButton(shootingController, OIConstants.kReverseIntakeButton);
     Button startShooterLowGoalButton = new JoystickButton(shootingController, OIConstants.kStartShooterLowGoalButton);
@@ -109,6 +112,9 @@ public class RobotContainer {
     Button startShooterHighGoalFarButton = new JoystickButton(shootingController, OIConstants.kStartShooterHighGoalFarButton);
     new POVButton(shootingController, 0).whenPressed(new LiftIntake(m_intakeSubsystem)); //dpad up
     new POVButton(shootingController, 180).whenPressed(new DropIntake(m_intakeSubsystem)); //dpad down
+    climberButton.whenPressed(new RunClimber(m_climberSubsystem,
+    () -> shootingController.getRawAxis(OIConstants.kRightClimberAxis),
+    () -> shootingController.getRawAxis(OIConstants.kRightClimberAxis)));
     new JoystickButton(rightDriveController, OIConstants.kStartIntakeButton).whenPressed(new StartIntake(m_intakeSubsystem));
     new JoystickButton(leftDriveController, OIConstants.kStopIntakeButton).whenPressed(new StopIntake(m_intakeSubsystem));
     new JoystickButton(shootingController, OIConstants.kStopShooterButton).whenPressed(new StopShooter(m_shooterSubsystem));
