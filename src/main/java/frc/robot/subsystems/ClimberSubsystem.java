@@ -33,10 +33,10 @@ public class ClimberSubsystem extends SubsystemBase {
     }
   }
 
-  public void setClimberSpeed(double speed){
-    climbMotor1.set(speed);
-    climbMotor2.set(speed);
-    System.out.println("setClimberSpeed called. Speed: " + speed);
+  public void setClimberSpeed(double leftSpeed, double rightSpeed){
+    climbMotor1.set(rightSpeed);
+    climbMotor2.set(leftSpeed);
+    System.out.println("setClimberSpeed called. Speed: " + leftSpeed);
   }
   
   public double getLeftClimberPosition() {
