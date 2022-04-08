@@ -1,9 +1,7 @@
 package frc.robot.commands.Auto;
 
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToHeading extends CommandBase {
