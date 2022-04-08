@@ -17,11 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Auto.AutoDoNothing;
-import frc.robot.commands.Auto.AutoShoot;
-import frc.robot.commands.Auto.AutoShootWithExtraPickup;
-import frc.robot.commands.Auto.AutoTesting;
-import frc.robot.commands.Auto.NavigateToPath;
+import frc.robot.commands.Auto.*;
 import frc.robot.commands.Teleop.Climber.BrakeClimber;
 import frc.robot.commands.Teleop.Climber.ClimberDoNothing;
 import frc.robot.commands.Teleop.Climber.ReleaseClimber;
@@ -90,6 +86,7 @@ public class RobotContainer {
     try {
       m_chooser.addOption("Trajectory Path 1", new NavigateToPath(m_driveSubsystem, TrajectoryUtil.fromPathweaverJson(trajectoryPath1)));
       m_chooser.addOption("Trajectory Path 2", new NavigateToPath(m_driveSubsystem, TrajectoryUtil.fromPathweaverJson(trajectoryPath2)));
+      m_chooser.addOption("AutoTest", new AutoTest(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     } catch (IOException e) {
       e.printStackTrace();
     }

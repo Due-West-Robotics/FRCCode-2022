@@ -63,7 +63,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return shootingEncoder.getVelocity();
   }
 
-  public void setTransportSpeed(double speed){
+  public void setTransportSpeed(double speed) {
     transportMotor.set(speed);
     System.out.println("setTransportSpeed called. Speed: " + speed);
   }
