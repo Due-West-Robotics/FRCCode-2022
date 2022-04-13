@@ -78,8 +78,11 @@ public class RobotContainer {
     trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
     trajectoryPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
 
-    m_chooser.setDefaultOption("One Ball Auto", new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-    m_chooser.addOption("Two Ball Auto (Experimental)", new AutoShootWithExtraPickup(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.setDefaultOption("Left", new AutoShootTwoBallLeft(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Right", new AutoShootTwoBallRight(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Middle", new AutoShootTwoBallMiddle(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("One Ball Auto", new AutoShoot(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Two Ball Auto (Old)", new AutoShootWithExtraPickup(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     m_chooser.addOption("Nothing", new AutoDoNothing());
     m_chooser.addOption("Testing", new AutoTesting(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 

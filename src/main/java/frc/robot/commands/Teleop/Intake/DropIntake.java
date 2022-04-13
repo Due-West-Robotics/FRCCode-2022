@@ -35,7 +35,7 @@ public class DropIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getIntakeLifterMotorPosition() >= 40){
+    if (m_intakeSubsystem.getIntakeLifterMotorPosition() >= 47.5){
       finished = true;
       System.out.println("Running Drop");
     }

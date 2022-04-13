@@ -4,7 +4,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class TurnToHeading extends CommandBase {
+public class AutoTurnToHeading extends CommandBase {
     
     private final DriveSubsystem m_driveSubsystem;
     private double m_power;
@@ -19,7 +19,7 @@ public class TurnToHeading extends CommandBase {
      * @param targetHeading The ending heading.
      * @param power The power, between 0 and 1.
      */
-    public TurnToHeading(DriveSubsystem driveSubsystem, Rotation2d targetHeading, double power) {
+    public AutoTurnToHeading(DriveSubsystem driveSubsystem, Rotation2d targetHeading, double power) {
       m_driveSubsystem = driveSubsystem;
       m_targetHeading = targetHeading;
       m_power = power;
@@ -33,7 +33,7 @@ public class TurnToHeading extends CommandBase {
      * @param targetHeading The ending heading, in rad.
      * @param power The power, between 0 and 1.
      */
-    public TurnToHeading(DriveSubsystem driveSubsystem, double targetHeading, double power) {
+    public AutoTurnToHeading(DriveSubsystem driveSubsystem, double targetHeading, double power) {
         m_driveSubsystem = driveSubsystem;
         m_targetHeading = new Rotation2d(targetHeading);
         m_power = power;

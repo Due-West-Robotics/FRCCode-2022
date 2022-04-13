@@ -68,6 +68,13 @@ public class ShooterSubsystem extends SubsystemBase {
     System.out.println("setTransportSpeed called. Speed: " + speed);
   }
 
+  private boolean checkHighCloseSpeed() {
+    double shooterSpeed = getShooterSpeed();
+    if (shooterSpeed < -2300 && shooterSpeed > -2350){  /// -2300 to -2350
+      return true;
+    }
+    return false;
+  }
 
   @Override
   public void periodic() {
@@ -76,6 +83,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Velocity", getShooterSpeed());
     SmartDashboard.putNumber("Left Servo", shootingServoL.getAngle());
     SmartDashboard.putNumber("Right Servo", shootingServoR.getAngle());
+    SmartDashboard.putBoolean("High Goal Speed", checkHighCloseSpeed());
   }
 
   @Override
