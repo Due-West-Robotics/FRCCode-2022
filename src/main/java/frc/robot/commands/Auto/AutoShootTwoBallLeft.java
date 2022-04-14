@@ -1,8 +1,10 @@
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.Teleop.Drive.CalibrateGyro;
 import frc.robot.commands.Teleop.Intake.DropIntake;
 import frc.robot.commands.Teleop.Intake.StartIntake;
 import frc.robot.commands.Teleop.Intake.StartTransport;
@@ -19,12 +21,13 @@ public class AutoShootTwoBallLeft extends SequentialCommandGroup{
     
     public AutoShootTwoBallLeft(DriveSubsystem m_drive, ShooterSubsystem m_shooter, IntakeSubsystem m_intake) {
         addCommands(
+            new CalibrateGyro(m_drive),
             new ShooterHoodDown(m_shooter, false),
             new DropIntake(m_intake),
             new StartIntake(m_intake),
             new AutoDriveTime(m_drive, -0.4, -0.4, 2, true),
             new StartShooter(m_shooter, ShooterConstants.kShooterHighGoalCloseSpeed),
-            new AutoTurnToHeading(m_drive, 180, -0.4),
+            new AutoTurnToHeading(m_drive, new Rotation2d(-Math.PI), 0.4),
             new AutoDriveTime(m_drive, -0.4, -0.4, 0.9, true),
             new WaitCommand(1),
             new StartTransport(m_shooter),

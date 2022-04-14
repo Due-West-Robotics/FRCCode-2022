@@ -11,6 +11,7 @@ public class AutoTurnToHeading extends CommandBase {
     private Rotation2d m_targetHeading;
     private boolean finished = false;
     private double turnTolerance = Math.PI / 16;
+    private boolean m_clockwise;
 
     /**
      * Constructor
@@ -43,14 +44,21 @@ public class AutoTurnToHeading extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+      if(m_targetHeading.getRadians() - turnTolerance > m_driveSubsystem.getPose().getRotation().getRadians()) {
+        m_clockwise = false;
+    } else if(m_targetHeading.getRadians() + turnTolerance < m_driveSubsystem.getPose().getRotation().getRadians()) {
+      m_clockwise = true;
+    } else {
+        finished = true;
+    }
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(m_targetHeading.getRadians() - turnTolerance > m_driveSubsystem.getPose().getRotation().getRadians()) {
+        if(m_targetHeading.getRadians() - turnTolerance > m_driveSubsystem.getPose().getRotation().getRadians() && m_clockwise == false) {
             m_driveSubsystem.TankDrive(m_power, -m_power);
-        } else if(m_targetHeading.getRadians() + turnTolerance < m_driveSubsystem.getPose().getRotation().getRadians()) {
+        } else if(m_targetHeading.getRadians() + turnTolerance < m_driveSubsystem.getPose().getRotation().getRadians() && m_clockwise == true) {
             m_driveSubsystem.TankDrive(-m_power, m_power);
         } else {
             finished = true;

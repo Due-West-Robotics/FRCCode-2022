@@ -25,7 +25,7 @@ public class ClimberSubsystem extends SubsystemBase {
       climbMotor1Encoder = climbMotor1.getEncoder();
       climbMotor2Encoder = climbMotor2.getEncoder();
       climbMotor2.setInverted(true);
-
+      resetClimberEncoders();
       setClimberBrake();
     }
     catch(Exception e){
@@ -46,6 +46,11 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public double getRightClimberPosition() {
     return climbMotor1Encoder.getPosition();
+  }
+
+  public void resetClimberEncoders() {
+    climbMotor1Encoder.setPosition(0.0);
+    climbMotor2Encoder.setPosition(0.0);
   }
 
   public void setClimberBrake() {

@@ -57,7 +57,7 @@ public final class Constants {
         public static final int kIntakeServoPort = 1;
         public static final int kIntakeLiftMotorPort = 7;
 
-        public static final double kIntakeSpeed = 0.40;
+        public static final double kIntakeSpeed = 0.7;
         public static final double kIntakeLiftSpeed = -0.50;
         public static final double kIntakeDropSpeed = 0.25;
         public static final double kTransportSpeed = -0.3;
@@ -74,7 +74,7 @@ public final class Constants {
 
         public static final double kShooterLowGoalSpeed = -0.23;
         public static final double kShooterHighGoalCloseSpeed = -0.40;
-        public static final double kShooterHighGoalFarSpeed = -0.50;
+        public static final double kShooterHighGoalFarSpeed = -0.46;
         public static final double kShooterServoSpeed = 0.5;
     }
 
@@ -83,6 +83,7 @@ public final class Constants {
         public static final int kClimber2MotorPort = 11;
 
         public static final double kClimberSpeed = 0.1;
+        public static final double kClimberSpeedMultiplier = -0.5;
         public static final double kClimberRaisedPosition = 60;
     }
 

@@ -70,7 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private boolean checkHighCloseSpeed() {
     double shooterSpeed = getShooterSpeed();
-    if (shooterSpeed < -2300 && shooterSpeed > -2350){  /// -2300 to -2350
+    if ((shooterSpeed < -2300 && shooterSpeed > -2400) || (shooterSpeed < -2550 && shooterSpeed > -2800)){  /// -2300 to -2350
       return true;
     }
     return false;

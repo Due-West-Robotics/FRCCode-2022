@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Teleop.Climber;
 
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 import java.util.function.DoubleSupplier;
@@ -15,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class RunClimber extends CommandBase {
   private final ClimberSubsystem m_climberSubsystem;
   private DoubleSupplier m_leftSpeed, m_rightSpeed;
-  private final double kSpeedMultiplier = -0.5;
 
   /**
    * Creates a new StartIntake command.
@@ -38,7 +38,10 @@ public class RunClimber extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climberSubsystem.setClimberSpeed(m_leftSpeed.getAsDouble() * kSpeedMultiplier, m_rightSpeed.getAsDouble() * kSpeedMultiplier);
+    if (m_climberSubsystem.getRightClimberPosition() >= 0) {
+
+    }
+    m_climberSubsystem.setClimberSpeed(m_leftSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier, m_rightSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier);
   }
 
   // Called once the command ends or is interrupted.

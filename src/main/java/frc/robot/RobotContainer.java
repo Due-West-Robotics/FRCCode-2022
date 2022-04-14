@@ -133,6 +133,10 @@ public class RobotContainer {
     m_driveSubsystem.setCoast();
   }
 
+  public void resetGyro() {
+    m_driveSubsystem.zeroHeading();
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -55,7 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
     }
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
-      zeroHeading();
       m_odometry = new DifferentialDriveOdometry(ahrs.getRotation2d());
     }
     catch (Exception e){
@@ -136,8 +135,16 @@ public class DriveSubsystem extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  private void zeroHeading() {
+  public void calibrateGyro() {
     ahrs.calibrate();
+  }
+
+  public boolean gyroIsCalibrating() {
+    return ahrs.isCalibrating();
+  }
+
+  public void zeroHeading() {
+    ahrs.reset();
   }
 
   public double getHeading() {
@@ -158,7 +165,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_odometry.update(ahrs.getRotation2d(), encoderL.getPosition(), encoderR.getPosition());
     SmartDashboard.putNumber("Roll", ahrs.getRoll());
     SmartDashboard.putNumber("Pitch", ahrs.getPitch());
-    SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+    SmartDashboard.putNumber("Yaw", getPose().getRotation().getRadians());
     SmartDashboard.putNumber("Encoder L", encoderL.getPosition());
     SmartDashboard.putNumber("Encoder R", encoderR.getPosition());
     SmartDashboard.putNumber("Speed L", leftMotors.get());
