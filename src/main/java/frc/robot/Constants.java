@@ -57,7 +57,7 @@ public final class Constants {
         public static final int kIntakeServoPort = 1;
         public static final int kIntakeLiftMotorPort = 7;
 
-        public static final double kIntakeSpeed = 0.7;
+        public static final double kIntakeSpeed = 0.6;
         public static final double kIntakeLiftSpeed = -0.50;
         public static final double kIntakeDropSpeed = 0.25;
         public static final double kTransportSpeed = -0.3;
