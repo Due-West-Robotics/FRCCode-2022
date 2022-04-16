@@ -38,11 +38,16 @@ public class RunClimber extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_climberSubsystem.getRightClimberPosition() <= 0 && m_rightSpeed.getAsDouble() >= 0) {
-      m_climberSubsystem.setClimberSpeed(0.0, 0.0);
+    if (Math.abs(m_leftSpeed.getAsDouble()) > ClimberConstants.kClimberDeadZone) {
+      if (m_climberSubsystem.getRightClimberPosition() <= 0 && m_rightSpeed.getAsDouble() >= 0) {
+        m_climberSubsystem.setClimberSpeed(0.0, 0.0);
+      }
+      else {
+        m_climberSubsystem.setClimberSpeed(m_leftSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier, m_rightSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier);
+      }
     }
     else {
-      m_climberSubsystem.setClimberSpeed(m_leftSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier, m_rightSpeed.getAsDouble() * ClimberConstants.kClimberSpeedMultiplier);
+      m_climberSubsystem.setClimberSpeed(0.0, 0.0);
     }
   }
 

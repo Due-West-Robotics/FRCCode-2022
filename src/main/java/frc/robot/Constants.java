@@ -83,7 +83,8 @@ public final class Constants {
         public static final int kClimber2MotorPort = 11;
 
         public static final double kClimberSpeed = 0.1;
-        public static final double kClimberSpeedMultiplier = -0.5;
+        public static final double kClimberSpeedMultiplier = -1;
+        public static final double kClimberDeadZone = 0.025;
         public static final double kClimberRaisedPosition = 60;
     }
 
