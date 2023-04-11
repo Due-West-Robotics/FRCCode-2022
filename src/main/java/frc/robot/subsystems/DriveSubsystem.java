@@ -55,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
-      m_odometry = new DifferentialDriveOdometry(ahrs.getRotation2d());
+      //m_odometry = new DifferentialDriveOdometry(ahrs.getRotation2d());
     }
     catch (Exception e){
       System.out.println("Gyro error: " + e + "\n");
@@ -87,10 +87,10 @@ public class DriveSubsystem extends SubsystemBase {
     return new DifferentialDriveWheelSpeeds(encoderL.getVelocity(), encoderR.getVelocity());
   }
 
-  public void resetOdometry(Pose2d pose) {
-    resetEncoders();
-    m_odometry.resetPosition(pose, ahrs.getRotation2d());
-  }
+  // public void resetOdometry(Pose2d pose) {
+  //   resetEncoders();
+  //   m_odometry.resetPosition(pose, ahrs.getRotation2d());
+  // }
 
   public double getLeftEncoderPosition(){
     return encoderL.getPosition();
